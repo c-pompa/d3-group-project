@@ -26,9 +26,20 @@
 // An array which will be used to store created cityMarkers
 
 
-// Perform an API call to the Citi Bike Station Information endpoint
-var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson", function(data) {
+// For loop
+// get lat lng from geojson ([features[i].geometry.coordinates[1], features[i].geometry.coordinates[0]])
+// make list from step above
 
+// For loop (2nd data set)
+//  loop list through api call passing lat long
+// save as json
+
+
+
+
+
+// Perform an API call to the Citi Bike Station Information endpoint
+var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson", function(data) {
 
     // console.log(data);
     var features = data.features;
