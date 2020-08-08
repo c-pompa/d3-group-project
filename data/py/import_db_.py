@@ -59,18 +59,6 @@ def createEarthquakeClass(db):
         mag = Column(db.Float)
         location = Column(db.String(255))
 
-
-
-
-
-
-
-
-
-
-
-
-
 # test example
 # # Define the Surfer Class
 # # inherit

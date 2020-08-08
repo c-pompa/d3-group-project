@@ -50,10 +50,12 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
 
         // create custom icon
         var earthquakeIcon = L.icon({
-            iconUrl: './static/images/noun_Earthquake_709338.svg',
+            iconUrl: '../static/images/noun_Earthquake_709338.svg',
             iconSize: [features[i].properties.mag * 6, features[i].properties.mag * 12], // size of the icon
             popupAnchor: [0, -15]
         });
+
+
         // create popup contents
         var customPopup = `<b>Location:</b> ${features[i].properties.place} <br> <b>Magnitude:</b> ${features[i].properties.mag}`;
 
@@ -62,6 +64,12 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
             'maxWidth': '500',
             'className': getStyle(features[i].properties.mag)
         }
+
+        // chartGroup.selectAll("rect")
+        // // event listener for onclick event
+        //         .on("click", function(d, i) {
+        //           alert(`Hey! You clicked bar ${dataCategories[i]}!`);
+        //         })
 
         function getStyle(d) {
             if (2.49 > d) {
