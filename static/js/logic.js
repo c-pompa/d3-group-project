@@ -1,53 +1,127 @@
-// 1. **Get your data set**
+// Add Techtonic Plate Later as an option
+var techtonicLayer = L.layerGroup();
+d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json", function(techtonicData) {
+    L.geoJSON(techtonicData, {
+        color: 'orange',
+        weight: 2
+    }).addTo(techtonicLayer);
+});
 
-// ![3-Data](Images/3-Data.png)
-
-// The USGS provides earthquake data in a number of different formats, updated every 5 minutes. Visit the [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) page and pick a data set to visualize. When you click on a data set, for example 'All Earthquakes from the Past 7 Days', you will be given a JSON representation of that data. You will be using the URL of this JSON to pull in the data for our visualization.
-
-// ![4-JSON](Images/4-JSON.png)
-// sd
-// 2. **Import & Visualize the Data**
-
-// Create a map using Leaflet that plots all of the earthquakes from your data set based on their longitude and latitude.
-
-// * Your data markers should reflect the magnitude of the earthquake in their size and color. Earthquakes with higher magnitudes should appear larger and darker in color.
-
-// * Include popups that provide additional information about the earthquake when a marker is clicked.
-
-// * Create a legend that will provide context for your map data.
-
-// * Your visualization should look something like the map above.
-
-
-// Create the tile layer that will be the background of our map
-
-// Initialize all of the LayerGroups we'll be using
-
-// An array which will be used to store created cityMarkers
+// ######################################################################
+// Test Event handler 
+// ######################################################################
+// d3.csv("../static/data/worldcup.csv", function(data) {
+//     overallTeamViz(data);
+// })
+// Clean box1 before loading new data. If not cleaned, info will overlap
+function cleanBox() {
+    var svgArea = d3.select("g.overallG").selectAll("*").remove();
+    if (!svgArea.empty()) {
+        svgArea.remove();
+    };
+    console.log('cleaned.....')
+}
 
 
-// For loop
-// get lat lng from geojson ([features[i].geometry.coordinates[1], features[i].geometry.coordinates[0]])
-// make list from step above
+// Event handler to grab popup box info and paste to box1
+function overallTeamViz(locationData, magnitudeData) {
 
-// For loop (2nd data set)
-//  loop list through api call passing lat long
-// save as json
+    // svg params
+    var svgHeight = window.innerHeight;
+    var svgWidth = window.innerWidth;
+    // margins
+    var margin = {
+        top: 50,
+        right: 50,
+        bottom: 50,
+        left: 50
+    };
+    // chart area minus margins
+    var chartHeight = svgHeight - margin.top - margin.bottom;
+    var chartWidth = svgWidth - margin.left - margin.right;
 
 
+    // create svg container
+    var svg = d3.select("div.viz").append("svg")
+        .append("g")
+        .attr("id", "teamsG")
+        .attr("height", svgHeight)
+        .attr("width", svgWidth);
+
+    d3.select("svg")
+        .append("g")
+        .attr("id", "teamsG")
+        .attr("transform", "translate(10,50)")
+        .selectAll("g")
+        .data(locationData)
+        .enter()
+        .append("g")
+        .attr("class", "overallG")
+        .attr("transform", function(d, i) { return "translate(" + (10 * 10) + ", 50%)" });
+
+    var teamG = d3.select("g.overallG");
+    console.log(locationData);
+    console.log(magnitudeData);
+    teamG
+        .append("circle")
+        .attr("r", 20);
+    teamG
+        .append("text")
+        .html(` ${magnitudeData}`)
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 
+    // .text(incomingData);
+
+    // .html(function(d, i) { return d });
+    // .text(function(d) { return d });
+
+    // var dataKeys = d3.keys(incomingData[0])
+    //     .filter(function(el) { return el != "team" && el != "region" })
+    // d3.select("#controls").selectAll("button.teams").data(dataKeys).enter().append("button")
+    //     .on("click", buttonClick)
+    //     .html(function(d) { return d });
+
+    // function buttonClick(d) {
+    //     var maxValue = d3.max(incomingData, function(el) { return parseFloat(el[d]) });
+    //     var colorQuantize = d3.scale.quantize().domain([0, maxValue]).range(colorbrewer.Reds[3]);
+    //     var radiusScale = d3.scale.linear().domain([0, maxValue]).range([2, 20]);
+    //     d3.selectAll("g.overallG").select("circle").transition().duration(1000).style("fill", function(p) { return colorQuantize(p[d]) }).attr("r", function(p) { return radiusScale(p[d]) })
+    // }
+
+    // teamG.on("mouseover", highlightRegion);
+    // teamG.on("mouseout", unHighlight);
+
+    // function highlightRegion(d, i) {
+    //     var teamColor = d3.rgb("pink")
+    //     d3.select(this).select("text").classed("highlight", true).attr("y", 10)
+    //     d3.selectAll("g.overallG").select("circle").style("fill", function(p) { return p.region == d.region ? teamColor.darker(.75) : teamColor.brighter(.5) })
+    //     this.parentElement.appendChild(this);
+
+    // }
+
+    // function unHighlight() {
+    //     d3.selectAll("g.overallG").select("circle").style("fill", "pink");
+    //     d3.selectAll("g.overallG").select("text").attr("y", 30).classed("highlight", false);
+    // }
+
+
+}
+// #####################################################
+// ### END TEST 
+// #####################################################    
 
 // Perform an API call to the Citi Bike Station Information endpoint
 var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson", function(data) {
 
-    // console.log(data);
+
     var features = data.features;
+    var techtonicArray = [];
     var earthquakeMarkers = [];
     var heatArray = [];
 
-    for (var i = 0; i < features.length; i++) {
 
+    for (var i = 0; i < features.length; i++) {
         // create custom icon
         var earthquakeIcon = L.icon({
             iconUrl: '../static/images/noun_Earthquake_709338.svg',
@@ -55,21 +129,14 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
             popupAnchor: [0, -15]
         });
 
-
         // create popup contents
-        var customPopup = `<b>Location:</b> ${features[i].properties.place} <br> <b>Magnitude:</b> ${features[i].properties.mag}`;
+        var customPopup = `<b >Location:</b> <context id='location'> ${features[i].properties.place} </context> <br> <b>Magnitude:</b>  <context id='magnitude'> ${features[i].properties.mag} </context>`;
 
         // specify popup options 
         var customOptions = {
             'maxWidth': '500',
             'className': getStyle(features[i].properties.mag)
         }
-
-        // chartGroup.selectAll("rect")
-        // // event listener for onclick event
-        //         .on("click", function(d, i) {
-        //           alert(`Hey! You clicked bar ${dataCategories[i]}!`);
-        //         })
 
         function getStyle(d) {
             if (2.49 > d) {
@@ -80,30 +147,50 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
                 return 'custom3';
             }
         };
+        // ###############################################################################
+        //  LEFT OFF HERE
 
 
         // loop through the cities array, create a new marker, push it to the cityMarkers array
         earthquakeMarkers.push(
-            L.marker([features[i].geometry.coordinates[1], features[i].geometry.coordinates[0]], { icon: earthquakeIcon }).bindPopup(customPopup, customOptions)
-        );
+            L.marker([features[i].geometry.coordinates[1], features[i].geometry.coordinates[0]], { icon: earthquakeIcon })
+            .bindPopup(customPopup, customOptions)
+            .on('click', function(d, i) {
+                d = d3.select("div.leaflet-popup-content > #location").html();
+                d2 = d3.select("div.leaflet-popup-content > #magnitude").html();
+                cleanBox();
+                overallTeamViz(d, d2);
+                // d3.select("#box1").selectAll("div")
+                //     .data([d])
+                //     .enter() // creates placeholder for new data
+                //     .append("div") // appends a div to placeholder
+                //     .classed("col", true) // sets the class of the new div
+                //     .html(function(d, i) {
+                //         return ` <h2>${d}${i} </h2> `;
+                //     }); // sets the html in the div to an image tag with the link
+            })
+        )
+
+
+        if (location) {
+            techtonicArray.push([]);
+        }
 
         if (location) {
             heatArray.push([features[i].geometry.coordinates[1], features[i].geometry.coordinates[0]]);
         }
-
-
     };
 
-
-    // Add all the cityMarkers to a new layer group.
-    // Now we can handle them as one group instead of referencing each individually
 
 
 
     var earthquakeLayer = L.layerGroup(earthquakeMarkers);
+
     var heat = L.heatLayer(heatArray, {
-        radius: 60,
-        blur: 40
+        minOpacity: .20,
+        radius: 55,
+        blur: 15,
+        max: 1.0
     });
 
     // Define variables for our tile layers
@@ -130,6 +217,7 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     // Overlays that may be toggled on or off
     var overlayMaps = {
         'Earthquakes': earthquakeLayer,
+        'Techtonic Plates': techtonicLayer,
         'Heat Map': heat
     };
 
@@ -139,6 +227,7 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
         zoom: 8,
         layers: [light, earthquakeLayer]
     });
+
 
     // Pass our map layers into our layer control
     // Add the layer control to the map
@@ -162,5 +251,29 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
 
     // Adding legend to the map
     legend.addTo(myMap);
+
+    // ########################################
+    // Water Mark
+    // ##########################################
+    L.Control.Watermark = L.Control.extend({
+        onAdd: function(map) {
+            var img = L.DomUtil.create('img');
+
+            img.src = '../static/images/logo.png';
+            img.style.width = '100px';
+
+            return img;
+        },
+        onRemove: function(map) {
+            // Nothing to do here
+        }
+    });
+    L.control.watermark = function(opts) {
+        return new L.Control.Watermark(opts);
+    }
+    L.control.watermark({ position: 'bottomleft' }).addTo(myMap);
+
+
+
 
 });
