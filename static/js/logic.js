@@ -60,8 +60,17 @@ function overallTeamViz(locationData, magnitudeData) {
         .attr("transform", function(d, i) { return "translate(" + (10 * 10) + ", 50%)" });
 
     var teamG = d3.select("g.overallG");
+    var teamH = d3.select("g.overallG");
     console.log(locationData);
     console.log(magnitudeData);
+
+    teamG
+        .append("circle")
+        .attr("r", 20);
+    teamG
+        .append("text")
+        .html(` ${magnitudeData}`)
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
     teamG
         .append("circle")
         .attr("r", 20);
