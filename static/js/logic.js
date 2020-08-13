@@ -7,12 +7,7 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
     }).addTo(techtonicLayer);
 });
 
-// ######################################################################
-// Test Event handler 
-// ######################################################################
-// d3.csv("../static/data/worldcup.csv", function(data) {
-//     overallTeamViz(data);
-// })
+
 // Clean box1 before loading new data. If not cleaned, info will overlap
 function cleanBox() {
     var svgArea = d3.select("g.overallG").selectAll("*").remove();
@@ -20,7 +15,7 @@ function cleanBox() {
         svgArea.remove();
     };
     console.log('cleaned.....')
-}
+};
 
 
 // Event handler to grab popup box info and paste to box1
@@ -60,17 +55,10 @@ function overallTeamViz(locationData, magnitudeData) {
         .attr("transform", function(d, i) { return "translate(" + (10 * 10) + ", 50%)" });
 
     var teamG = d3.select("g.overallG");
-    var teamH = d3.select("g.overallG");
+
     console.log(locationData);
     console.log(magnitudeData);
 
-    teamG
-        .append("circle")
-        .attr("r", 20);
-    teamG
-        .append("text")
-        .html(` ${magnitudeData}`)
-        .attr("transform", `translate(${margin.left}, ${margin.top})`);
     teamG
         .append("circle")
         .attr("r", 20);
@@ -139,7 +127,7 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
         });
 
         // create popup contents
-        var customPopup = `<b >Location:</b> <context id='location'> ${features[i].properties.place} </context> <br> <b>Magnitude:</b>  <context id='magnitude'> ${features[i].properties.mag} </context>`;
+        var customPopup = `<b>Location:</b> <context id='location'> ${features[i].properties.place} </context> <br> <b>Magnitude:</b>  <context id='magnitude'> ${features[i].properties.mag} </context> <hr> <p class='littledetails'>Lat: <context id='lat'> ${features[i].geometry.coordinates[1]} </context>, Lat: <context id='long'> ${features[i].geometry.coordinates[0]} </context>, Date: <context id='date'> ${features[i].properties.time} </context><p>`;
 
         // specify popup options 
         var customOptions = {
@@ -191,8 +179,6 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     };
 
 
-
-
     var earthquakeLayer = L.layerGroup(earthquakeMarkers);
 
     var heat = L.heatLayer(heatArray, {
@@ -241,7 +227,6 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     // Pass our map layers into our layer control
     // Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps).addTo(myMap);
-
 
     // Set up the legend
     var legend = L.control({ position: "bottomright" });

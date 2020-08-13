@@ -109,6 +109,12 @@ h2 {
     position: relative;
 }
 
+div.leaflet-popup-content p {
+    font-size: 8px !important;
+    margin: 0;
+    padding: 0;
+}
+
 
 /*  Extra small devices (portrait phones, less than 576px) */
 
