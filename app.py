@@ -1,11 +1,13 @@
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func
+from sqlalchemy import create_engine, func, inspect
 from data.py.classes_app import createWeatherClass,createEarthquakeClass
 import os
 from flask import Flask, jsonify, render_template,request,redirect
 from flask_sqlalchemy import SQLAlchemy
+import update_data
+
 
 #################################################
 # Flask Setup
@@ -44,33 +46,20 @@ weather_earthquake = Base.classes.weatherSeries
 # Flask Routes
 #################################################
 
-@app.route("/")
-#   * Home page.
-def home():
 
-# Create our session (link) from Python to the DB
-    session = Session(engine)
-
-    """Return a list of dates and prcp measurements from Measurement table"""
-    # Query all date and prcp measurements
-    results = session.query(weather_earthquake.date, weather_earthquake.maxtemp).all()
-
-    session.close()
-
-    # Create a dictionary from the row data and append to a list of date_prcp_data
-    date_prcp_data = []
-    for datee, prcpp in results:
-        date_prcp_dict = {}
-        date_prcp_dict[datee] = prcpp
-        date_prcp_data.append(date_prcp_dict)
-
-    print(date_prcp_data)
-    # return jsonify(date_prcp_data)
+@app.route('/test')
+def test_page():
+    # look inside `templates` and serve `index.html`
+    return render_template('index.html')
 
 
+@app.route("/test/update/<weather_data_get>")
+def justice_league_character(weather_data_get):
 
-    """Render Index.html"""
-    return render_template("index.html")
+    print(weather_data_get)
+    weather_data = update_data.update_weather(weather_data_get)
+    return jsonify(weather_data)
+    
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

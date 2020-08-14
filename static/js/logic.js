@@ -10,7 +10,7 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
 
 // Clean box1 before loading new data. If not cleaned, info will overlap
 function cleanBox() {
-    var svgArea = d3.select("g.overallG").selectAll("*").remove();
+    var svgArea = d3.select("div.viz").selectAll("*").remove();
     if (!svgArea.empty()) {
         svgArea.remove();
     };
@@ -18,18 +18,65 @@ function cleanBox() {
 };
 
 
+function update_data(d_lat) {
+    d3.json(`test/update/${d_lat}`, function(d) {
+        console.log(d[3])
+        var box1 = d3.select("div.viz");
+
+        var tRow = box1.append("div").attr("class", "row");
+
+        var tData = tRow.append("div").attr("class", "col").attr("id", "magnitude_info");
+        tData.html(`<div class='small_details'><strong>MAGNITUDE</strong></div> ${d[3]['magnitude']} <br> <div class='small_details'> ${d[3]['city']}</div>`)
+
+        var tData2 = tRow.append("div").attr("class", "col").attr("id", "weather_info");
+        tData2.html(`<strong>Temperatures </strong><br><br><ul> <li> Temp: ${d[3]['maxtemp']} / ${d[3]['mintemp']} | Avg: ${d[3]['avgtemp']}</li>
+        <li>Temp: ${d[2]['maxtemp']} / ${d[2]['mintemp']} | Avg: ${d[2]['avgtemp']}</li>
+        <li>Temp: ${d[1]['maxtemp']} / ${d[1]['mintemp']} | Avg: ${d[1]['avgtemp']}</li>
+        <li>Temp: ${d[0]['maxtemp']} / ${d[0]['mintemp']} | Avg: ${d[0]['avgtemp']}</li></ul>
+        `)
+
+
+    });
+};
+
+//####################################################################
+// function shower(d, earthquakeMarkers) {
+
+//     earthquakeMarkers.append("circle")
+//         .attr("cx", "10")
+//         .attr("cy", "10")
+//         .attr("r", 4)
+//         .style("fill", "#ff5a00")
+//         .style("fill-opacity", .2)
+//         .style("stroke", "#ffe002")
+//         .style("stroke-opacity", .7)
+//         .transition()
+//         .duration(4000)
+//         .ease(Math.sqrt)
+//         .attr("r", d * 5)
+//         .style("fill-opacity", 1e-5)
+//         .style("stroke-opacity", 1e-8)
+//         .remove()
+//     setTimeout(shower, 5);
+// };
+
+// function redraw() {
+//     svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+// };
+//####################################################################
+
+
 // Event handler to grab popup box info and paste to box1
 function overallTeamViz(locationData, magnitudeData) {
-
     // svg params
     var svgHeight = window.innerHeight;
     var svgWidth = window.innerWidth;
     // margins
     var margin = {
-        top: 50,
-        right: 50,
-        bottom: 50,
-        left: 50
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 20
     };
     // chart area minus margins
     var chartHeight = svgHeight - margin.top - margin.bottom;
@@ -56,8 +103,7 @@ function overallTeamViz(locationData, magnitudeData) {
 
     var teamG = d3.select("g.overallG");
 
-    console.log(locationData);
-    console.log(magnitudeData);
+    // console.log(weather_data_get);
 
     teamG
         .append("circle")
@@ -127,7 +173,7 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
         });
 
         // create popup contents
-        var customPopup = `<b>Location:</b> <context id='location'> ${features[i].properties.place} </context> <br> <b>Magnitude:</b>  <context id='magnitude'> ${features[i].properties.mag} </context> <hr> <p class='littledetails'>Lat: <context id='lat'> ${features[i].geometry.coordinates[1]} </context>, Lat: <context id='long'> ${features[i].geometry.coordinates[0]} </context>, Date: <context id='date'> ${features[i].properties.time} </context><p>`;
+        var customPopup = `<b>Location:</b> <context id='location'> ${features[i].properties.place} </context> <br> <b>Magnitude:</b>  <context id='magnitude'> ${features[i].properties.mag} </context> <hr> <p class='littledetails'>Lat: <context id='lat'>${features[i].geometry.coordinates[1]} </context>, Long:<context id='long'>${features[i].geometry.coordinates[0]}</context>, Date: <context id='date'> ${features[i].properties.time} </context><p>`;
 
         // specify popup options 
         var customOptions = {
@@ -144,19 +190,20 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
                 return 'custom3';
             }
         };
-        // ###############################################################################
-        //  LEFT OFF HERE
-
 
         // loop through the cities array, create a new marker, push it to the cityMarkers array
         earthquakeMarkers.push(
             L.marker([features[i].geometry.coordinates[1], features[i].geometry.coordinates[0]], { icon: earthquakeIcon })
             .bindPopup(customPopup, customOptions)
+
             .on('click', function(d, i) {
                 d = d3.select("div.leaflet-popup-content > #location").html();
                 d2 = d3.select("div.leaflet-popup-content > #magnitude").html();
+                d_lat = d3.select("p.littledetails > #lat").html();
+                console.log(d_lat);
                 cleanBox();
-                overallTeamViz(d, d2);
+                update_data(d_lat);
+                // overallTeamViz(d, d2);
                 // d3.select("#box1").selectAll("div")
                 //     .data([d])
                 //     .enter() // creates placeholder for new data
@@ -220,9 +267,9 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     var myMap = L.map("map", {
         center: [34.0522, -118.2437],
         zoom: 8,
+        zoomControl: false,
         layers: [light, earthquakeLayer]
     });
-
 
     // Pass our map layers into our layer control
     // Add the layer control to the map
@@ -245,6 +292,9 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
 
     // Adding legend to the map
     legend.addTo(myMap);
+    L.control.zoom({
+        position: 'bottomright'
+    }).addTo(myMap);
 
     // ########################################
     // Water Mark
@@ -265,7 +315,7 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     L.control.watermark = function(opts) {
         return new L.Control.Watermark(opts);
     }
-    L.control.watermark({ position: 'bottomleft' }).addTo(myMap);
+    L.control.watermark({ position: 'topleft' }).addTo(myMap);
 
 
 
