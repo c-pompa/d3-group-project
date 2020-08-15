@@ -2,34 +2,131 @@ body,
 html {
     padding: 0;
     margin: 0;
+    background-color: #F3F3F3;
+}
+
+#header {
+    /* background-color: yellow; */
+    height: 75px;
+    min-width: 800px;
+    border-bottom: 5px solid #E35205;
+    font-size: 20px;
+    font-family: 'Asap', sans-serif;
+    font-weight: bold;
+}
+
+h3 {
+    color: #083e66;
+    font-size: 1rem;
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+
+h4 {
+    color: #30C3CD;
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+}
+
+#logo {
+    margin: 15px;
+    /* padding-top: 15px;
+    margin-right: 20px; */
+    float: left;
+}
+
+p {
+    padding: 24px 0;
+}
+
+span.date {
+    padding: 0;
+    color: #43505d;
+    font-size: 10px;
+    margin: 0;
+}
+
+span.mag_title {
+    color: #e2ebf2;
+    font-size: 1rem;
+    font-weight: bold;
+    vertical-align: top;
+    text-align: left;
+}
+
+li>p.date {
+    padding: 0;
+    color: #43505d;
+    font-size: 10px;
+    margin: 0;
 }
 
 .container {
-    width: 100%;
-    height: 100%;
     padding: 0;
     margin: 0;
     background-color: yellow;
+}
+
+.container-fluid {
+    padding: 0;
+    margin: 0;
 }
 
 .center-all {
     width: 800px;
 }
 
-.map-col {
+#map {
     background-color: teal;
-    height: 600px;
-    background-color: brown;
+    height: 500px;
+    border-bottom: 5px solid #E35205;
+    margin-bottom: 5px;
+    min-width: 50%;
 }
 
-#box1 {}
+#temperature {
+    background-color: #e2ebf2;
+    height: 500px;
+    border-bottom: 5px solid #E35205;
+    min-width: 50%;
+    padding: 0;
+    margin: 0;
+}
 
-#box2 {}
+#fact-boxes {
+    height: 200px;
+    background-color: #F3F3F3;
+    min-width: 800px;
+}
+
+#california-data {
+    height: 200px;
+    background-color: #1697B7;
+    min-width: 800px;
+    border-bottom: 5px solid #E35205;
+}
+
+#footer {
+    height: 100px;
+    background-color: #F3AD78;
+    min-width: 800px;
+    border-bottom: 5px solid #E35205;
+}
+
+#box1 {
+    width: 100%
+}
+
+#box2 {
+    background-color: #1697B7;
+    height: 250px;
+    min-width: 400px;
+}
 
 .row {
     padding: 0;
     margin: 0;
-    background-color: yellow;
+    /* background-color: yellow; */
 }
 
 .row-specs {
@@ -109,34 +206,10 @@ h2 {
     position: relative;
 }
 
-
-/*  Extra small devices (portrait phones, less than 576px) */
-
-@media (max-width: 575.98px) {
-    ...
-}
-
-
-/* // Small devices (landscape phones, less than 768px) */
-
-@media (max-width: 767.98px) {
-    ...
-}
-
-
-/* // Medium devices (tablets, less than 992px) */
-
-@media (max-width: 991.98px) {
-    ...
-}
-
-
-/* // Large devices (desktops, less than 1200px) */
-
-@media (max-width: 2048.98px) {
-    .container {
-        max-width: 100%;
-    }
+div.leaflet-popup-content p {
+    font-size: 8px !important;
+    margin: 0;
+    padding: 0;
 }
 
 svg {
@@ -152,10 +225,69 @@ div#viz {
     font-size: 40px;
 }
 
+div.small_details {
+    font-size: 10px;
+    color: rgb(235, 235, 235);
+    padding: 0;
+    margin: 0;
+}
+
+div#magnitude_info {
+    font-size: 60px;
+    font-weight: bold;
+    height: 250px;
+    min-width: 120px;
+    width: 120px;
+    font-family: 'Asap', sans-serif;
+    color: white;
+    background-color: #43505D;
+    margin: 0;
+    padding: 15px;
+    vertical-align: top;
+    text-align: left;
+}
+
+p.mag-number {
+    -webkit-text-stroke: 3px #1697B7;
+    -webkit-text-stroke-width: thin;
+    margin: 0;
+    padding: 0px 0px 10px 0px;
+    font-size: 50px;
+    text-align: center !important;
+}
+
+div#weather_info {
+    font-size: 14px;
+    font-weight: bold;
+    height: 250px;
+    text-align: left;
+    margin: 0;
+    padding: 15px 0px 0px 15px;
+    font-family: 'Asap', sans-serif;
+}
+
+div.col-7>ul {
+    font-size: 10px;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul>li {
+    font-size: 16px;
+    margin: 7px 0 0 0;
+    margin-left: 0;
+    color: #43505d;
+}
+
 circle {
     fill: pink;
     stroke: black;
     stroke-width: 1px;
+}
+
+h2#facts {
+    color: #43505d;
 }
 
 circle.active {
@@ -164,4 +296,63 @@ circle.active {
 
 circle.inactive {
     fill: gray;
+}
+
+.col,
+.col-lg,
+.col-md {
+    padding: 0px 0px 0px 0px;
+}
+
+
+/* 
+@keyframes mymove {
+    50% {
+        padding: 15px;
+    }
+} */
+
+
+/* // Extra small devices (portrait phones, less than 576px) */
+
+
+/* // No media query since this is the default in Bootstrap */
+
+
+/* // Small devices (landscape phones, 576px and up) */
+
+@media (min-width: 576px) {
+    ...
+}
+
+
+/* // Medium devices (tablets, 768px and up) */
+
+@media (min-width: 768px) {
+    ...
+}
+
+
+/* // Large devices (desktops, 992px and up) */
+
+@media (min-width: 992px) {
+    #map {
+        min-width: 400px;
+    }
+    #temperature {
+        min-width: 400px;
+    }
+    .justify-content:;
+}
+
+
+/* // Extra large devices (large desktops, 1200px and up) */
+
+@media (min-width: 1200px) {
+    #map {
+        min-width: 400px;
+    }
+    #temperature {
+        min-width: 400px;
+    }
 }

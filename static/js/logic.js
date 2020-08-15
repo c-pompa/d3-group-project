@@ -7,34 +7,99 @@ d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/
     }).addTo(techtonicLayer);
 });
 
-// ######################################################################
-// Test Event handler 
-// ######################################################################
-// d3.csv("../static/data/worldcup.csv", function(data) {
-//     overallTeamViz(data);
-// })
+
 // Clean box1 before loading new data. If not cleaned, info will overlap
 function cleanBox() {
-    var svgArea = d3.select("g.overallG").selectAll("*").remove();
+    var svgArea = d3.select("div.viz").selectAll("*").remove();
     if (!svgArea.empty()) {
         svgArea.remove();
     };
     console.log('cleaned.....')
-}
+};
+
+
+function update_data(d_lat) {
+    d3.json(`test/update/${d_lat}`, function(d) {
+        // console.log(d)
+        var box1 = d3.select("div.viz");
+
+        var tRow = box1.append("div").attr("class", "row");
+
+        var tData = tRow.append("div").attr("class", "col").attr("id", "magnitude_info");
+        tData.html(`<span class='mag_title'>MAGNITUDE</span><p class='mag-number'> ${d[3]['magnitude']} </p><div class='small_details'>City:  ${d[3]['city']}</div>`)
+
+        var tData2 = tRow.append("div").attr("class", "col-7").attr("id", "weather_info");
+        tData2.html(`<h3>Temperatures </h3>
+        <ul> <li><p class='date'>${d[3]['date']}</p>${d[3]['maxtemp']}° / ${d[3]['mintemp']}°    |    Avg: ${d[3]['avgtemp']}°</li>
+        <li><p class='date'>${d[2]['date']}</p>${d[2]['maxtemp']}° / ${d[2]['mintemp']}°    |    Avg: ${d[2]['avgtemp']}°</li>
+        <li><p class='date'>${d[1]['date']}</p>${d[1]['maxtemp']}° / ${d[1]['mintemp']}°    |    Avg: ${d[1]['avgtemp']}°</li>
+        <li><p class='date'>${d[0]['date']}</p>${d[0]['maxtemp']}° / ${d[0]['mintemp']}°    |    Avg: ${d[0]['avgtemp']}°</li></ul><span class='date'>(high/low)</span>
+        `)
+
+
+    });
+};
+
+function factsRow() {
+    d3.json(`test/facts`, function(d) {
+        console.log(d)
+        var box1 = d3.select("div#fact-boxes");
+
+        var tRow = box1.append("div").attr("class", "row");
+
+
+
+        // ${d[0]['count']}
+        var tData = tRow.append("div").attr("class", "col").attr("id", "above6");
+        tData.html(`<h2 id='facts'>0</h2><h4>earthquakes above 6.0 </h4> `)
+
+        var tData2 = tRow.append("div").attr("class", "col").attr("id", "highest_recorded_eq");
+        tData2.html(`<div class='small_details'>magnitude of</div><h2>${d[0]['highest_magnitude']}</h2><h4>Highest recent recorded quake<br>location in ${d[0]['highest_location']}
+        `)
+
+
+    });
+};
+factsRow();
+
+//####################################################################
+// function shower(d, earthquakeMarkers) {
+
+//     earthquakeMarkers.append("circle")
+//         .attr("cx", "10")
+//         .attr("cy", "10")
+//         .attr("r", 4)
+//         .style("fill", "#ff5a00")
+//         .style("fill-opacity", .2)
+//         .style("stroke", "#ffe002")
+//         .style("stroke-opacity", .7)
+//         .transition()
+//         .duration(4000)
+//         .ease(Math.sqrt)
+//         .attr("r", d * 5)
+//         .style("fill-opacity", 1e-5)
+//         .style("stroke-opacity", 1e-8)
+//         .remove()
+//     setTimeout(shower, 5);
+// };
+
+// function redraw() {
+//     svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+// };
+//####################################################################
 
 
 // Event handler to grab popup box info and paste to box1
 function overallTeamViz(locationData, magnitudeData) {
-
     // svg params
     var svgHeight = window.innerHeight;
     var svgWidth = window.innerWidth;
     // margins
     var margin = {
-        top: 50,
-        right: 50,
-        bottom: 50,
-        left: 50
+        top: 20,
+        right: 20,
+        bottom: 20,
+        left: 20
     };
     // chart area minus margins
     var chartHeight = svgHeight - margin.top - margin.bottom;
@@ -60,8 +125,9 @@ function overallTeamViz(locationData, magnitudeData) {
         .attr("transform", function(d, i) { return "translate(" + (10 * 10) + ", 50%)" });
 
     var teamG = d3.select("g.overallG");
-    console.log(locationData);
-    console.log(magnitudeData);
+
+    // console.log(weather_data_get);
+
     teamG
         .append("circle")
         .attr("r", 20);
@@ -70,46 +136,8 @@ function overallTeamViz(locationData, magnitudeData) {
         .html(` ${magnitudeData}`)
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-
-    // .text(incomingData);
-
-    // .html(function(d, i) { return d });
-    // .text(function(d) { return d });
-
-    // var dataKeys = d3.keys(incomingData[0])
-    //     .filter(function(el) { return el != "team" && el != "region" })
-    // d3.select("#controls").selectAll("button.teams").data(dataKeys).enter().append("button")
-    //     .on("click", buttonClick)
-    //     .html(function(d) { return d });
-
-    // function buttonClick(d) {
-    //     var maxValue = d3.max(incomingData, function(el) { return parseFloat(el[d]) });
-    //     var colorQuantize = d3.scale.quantize().domain([0, maxValue]).range(colorbrewer.Reds[3]);
-    //     var radiusScale = d3.scale.linear().domain([0, maxValue]).range([2, 20]);
-    //     d3.selectAll("g.overallG").select("circle").transition().duration(1000).style("fill", function(p) { return colorQuantize(p[d]) }).attr("r", function(p) { return radiusScale(p[d]) })
-    // }
-
-    // teamG.on("mouseover", highlightRegion);
-    // teamG.on("mouseout", unHighlight);
-
-    // function highlightRegion(d, i) {
-    //     var teamColor = d3.rgb("pink")
-    //     d3.select(this).select("text").classed("highlight", true).attr("y", 10)
-    //     d3.selectAll("g.overallG").select("circle").style("fill", function(p) { return p.region == d.region ? teamColor.darker(.75) : teamColor.brighter(.5) })
-    //     this.parentElement.appendChild(this);
-
-    // }
-
-    // function unHighlight() {
-    //     d3.selectAll("g.overallG").select("circle").style("fill", "pink");
-    //     d3.selectAll("g.overallG").select("text").attr("y", 30).classed("highlight", false);
-    // }
-
-
 }
-// #####################################################
-// ### END TEST 
-// #####################################################    
+
 
 // Perform an API call to the Citi Bike Station Information endpoint
 var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson", function(data) {
@@ -130,7 +158,7 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
         });
 
         // create popup contents
-        var customPopup = `<b >Location:</b> <context id='location'> ${features[i].properties.place} </context> <br> <b>Magnitude:</b>  <context id='magnitude'> ${features[i].properties.mag} </context>`;
+        var customPopup = `<b>Location:</b> <context id='location'> ${features[i].properties.place} </context> <br> <b>Magnitude:</b>  <context id='magnitude'> ${features[i].properties.mag} </context> <hr> <p class='littledetails'>Lat: <context id='lat'>${features[i].geometry.coordinates[1]} </context>, Long:<context id='long'>${features[i].geometry.coordinates[0]}</context>, Date: <context id='date'> ${features[i].properties.time} </context><p>`;
 
         // specify popup options 
         var customOptions = {
@@ -147,19 +175,20 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
                 return 'custom3';
             }
         };
-        // ###############################################################################
-        //  LEFT OFF HERE
-
 
         // loop through the cities array, create a new marker, push it to the cityMarkers array
         earthquakeMarkers.push(
             L.marker([features[i].geometry.coordinates[1], features[i].geometry.coordinates[0]], { icon: earthquakeIcon })
             .bindPopup(customPopup, customOptions)
+
             .on('click', function(d, i) {
                 d = d3.select("div.leaflet-popup-content > #location").html();
                 d2 = d3.select("div.leaflet-popup-content > #magnitude").html();
+                d_lat = d3.select("p.littledetails > #lat").html();
+                console.log(d_lat);
                 cleanBox();
-                overallTeamViz(d, d2);
+                update_data(d_lat);
+                // overallTeamViz(d, d2);
                 // d3.select("#box1").selectAll("div")
                 //     .data([d])
                 //     .enter() // creates placeholder for new data
@@ -182,28 +211,28 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     };
 
 
-
-
     var earthquakeLayer = L.layerGroup(earthquakeMarkers);
 
     var heat = L.heatLayer(heatArray, {
         minOpacity: .20,
         radius: 55,
-        blur: 15,
+        blur: 20,
         max: 1.0
     });
 
     // Define variables for our tile layers
     var light = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-        maxZoom: 15,
+        maxZoom: 10,
+        minZoom: 4,
         id: "light-v10",
         accessToken: API_KEY
     });
 
     var dark = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-        maxZoom: 15,
+        maxZoom: 10,
+        minZoom: 4,
         id: "dark-v10",
         accessToken: API_KEY
     });
@@ -224,14 +253,16 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     // Create map object and set default layers
     var myMap = L.map("map", {
         center: [34.0522, -118.2437],
-        zoom: 8,
+        zoom: 5,
+        zoomControl: false,
         layers: [light, earthquakeLayer]
     });
-
 
     // Pass our map layers into our layer control
     // Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps).addTo(myMap);
+    //Create SVG element
+
 
 
     // Set up the legend
@@ -252,6 +283,10 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     // Adding legend to the map
     legend.addTo(myMap);
 
+    L.control.zoom({
+        position: 'bottomright'
+    }).addTo(myMap);
+
     // ########################################
     // Water Mark
     // ##########################################
@@ -260,7 +295,7 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
             var img = L.DomUtil.create('img');
 
             img.src = '../static/images/logo.png';
-            img.style.width = '100px';
+            img.style.width = '25px';
 
             return img;
         },
@@ -271,8 +306,7 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     L.control.watermark = function(opts) {
         return new L.Control.Watermark(opts);
     }
-    L.control.watermark({ position: 'bottomleft' }).addTo(myMap);
-
+    L.control.watermark({ position: 'topleft' }).addTo(myMap);
 
 
 

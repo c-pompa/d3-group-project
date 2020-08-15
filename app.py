@@ -1,10 +1,13 @@
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, func
-from data.py.classes_app import createWeatherClass,createEarthquakeClass
+from sqlalchemy import create_engine, func, inspect
+# from data.py.classes_app import createWeatherClass,createEarthquakeClass
 import os
 from flask import Flask, jsonify, render_template,request,redirect
+from flask_sqlalchemy import SQLAlchemy
+import update_data
+
 
 #################################################
 # Flask Setup
@@ -16,36 +19,54 @@ app = Flask(__name__)
 # Database Setup
 # #################################################
 
-from flask_sqlalchemy import SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///earthquake_weather.sqlite"
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '') or "sqlite:///data/py/earthquake_weather.sqlite"
 
-# Remove tracking modifications
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# # Remove tracking modifications
+# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 
 # group_project_db = createWeatherClass(db)
 
+#################################################
+# Database Setup
+#################################################
+engine = create_engine("sqlite:///earthquake_weather.sqlite")
 
-# engine = create_engine("sqlite:///earthquake_weather.sqlite")
-# # reflect an existing database into a new model
-# Base = automap_base()
-# # reflect the tables
-# Base.prepare(engine, reflect=True)
-# # Save reference to the table
-# Measurement = Base.classes.measurement
-# Station = Base.classes.station
+# reflect an existing database into a new model
+Base = automap_base()
+# reflect the tables
+Base.prepare(engine, reflect=True)
+
+# Save reference to the table
+weather_earthquake = Base.classes.weatherSeries
 
 
 #################################################
 # Flask Routes
 #################################################
 
-@app.route("/")
-#   * Home page.
-def home():
-    """Render Index.html"""
-    return render_template("index.html")
+
+@app.route('/test')
+def test_page():
+    # look inside `templates` and serve `index.html`
+    return render_template('index.html')
+
+
+@app.route("/test/update/<weather_data_get>")
+def weatherDataRetrieve(weather_data_get):
+
+    print(weather_data_get)
+    weather_data = update_data.update_weather(weather_data_get)
+    return jsonify(weather_data)
+    
+@app.route("/test/facts")
+def factBoxes():
+
+    # print(weather_data_get)
+    weather_facts = update_data.aboveSixQuakeCall()
+    return jsonify(weather_facts)
+    
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
