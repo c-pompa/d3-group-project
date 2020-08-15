@@ -2,7 +2,7 @@ import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func, inspect
-from data.py.classes_app import createWeatherClass,createEarthquakeClass
+# from data.py.classes_app import createWeatherClass,createEarthquakeClass
 import os
 from flask import Flask, jsonify, render_template,request,redirect
 from flask_sqlalchemy import SQLAlchemy
@@ -31,7 +31,7 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-engine = create_engine("sqlite:///data/py/earthquake_weather.sqlite")
+engine = create_engine("sqlite:///earthquake_weather.sqlite")
 
 # reflect an existing database into a new model
 Base = automap_base()
@@ -54,11 +54,18 @@ def test_page():
 
 
 @app.route("/test/update/<weather_data_get>")
-def justice_league_character(weather_data_get):
+def weatherDataRetrieve(weather_data_get):
 
     print(weather_data_get)
     weather_data = update_data.update_weather(weather_data_get)
     return jsonify(weather_data)
+    
+@app.route("/test/facts")
+def factBoxes():
+
+    # print(weather_data_get)
+    weather_facts = update_data.aboveSixQuakeCall()
+    return jsonify(weather_facts)
     
 
 if __name__ == "__main__":

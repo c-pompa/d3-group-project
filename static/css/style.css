@@ -2,11 +2,50 @@ body,
 html {
     padding: 0;
     margin: 0;
+    background-color: #F3F3F3;
+}
+
+#header {
+    /* background-color: yellow; */
+    height: 75px;
+    min-width: 800px;
+    border-bottom: 5px solid #E8804C;
+    font-size: 20px;
+    font-family: 'Asap', sans-serif;
+    font-weight: bold;
+}
+
+h3 {
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+h4 {
+    color: #30C3CD;
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+}
+
+#logo {
+    margin: 15px;
+    /* padding-top: 15px;
+    margin-right: 20px; */
+    float: left;
+}
+
+p {
+    padding: 24px 0;
+}
+
+li>p.date {
+    padding: 0;
+    color: #F3F3F3;
+    font-size: 10px;
+    margin: 0;
 }
 
 .container {
-    width: 100%;
-    height: 100%;
     padding: 0;
     margin: 0;
     background-color: yellow;
@@ -16,21 +55,52 @@ html {
     width: 800px;
 }
 
-.map-col {
+#map {
     background-color: teal;
-    height: 600px;
-    background-color: brown;
+    height: 500px;
+    border-bottom: 5px solid #E8804C;
+    margin-bottom: 5px;
+}
+
+#temperature {
+    background-color: #30C3CD;
+    height: 500px;
+    border-bottom: 5px solid #E8804C;
+}
+
+#fact-boxes {
+    height: 200px;
+    background-color: #F3F3F3;
+    min-width: 800px;
+}
+
+#california-data {
+    height: 200px;
+    background-color: #1697B7;
+    min-width: 800px;
+    border-bottom: 5px solid #E8804C;
+}
+
+#footer {
+    height: 100px;
+    background-color: #F3AD78;
+    min-width: 800px;
+    border-bottom: 5px solid #E8804C;
 }
 
 #box1 {}
 
-#box2 {}
+#box2 {
+    background-color: #1697B7;
+    height: 250px;
+}
 
-.row {
+
+/* .row {
     padding: 0;
     margin: 0;
     background-color: yellow;
-}
+} */
 
 .row-specs {
     height: 300px;
@@ -139,12 +209,10 @@ div.leaflet-popup-content p {
 
 /* // Large devices (desktops, less than 1200px) */
 
-@media (max-width: 2048.98px) {
-    .container {
-        max-width: 100%;
-    }
-}
+@media (max-width: 2048.98px) {}
 
+
+}
 svg {
     height: 300px;
     width: 100%;
@@ -152,61 +220,60 @@ svg {
     margin: 0;
     padding: 0;
 }
-
 div#viz {
     font-weight: bold;
     font-size: 40px;
 }
-
 div.small_details {
     font-size: 10px;
+    color: black;
 }
-
 div#magnitude_info {
-    font-size: 40px;
+    font-size: 60px;
     font-weight: bold;
-    height: 300px;
+    height: 250px;
     text-align: center !important;
-    padding-top: 100px;
+    padding-top: 75px;
     width: 200px;
-    min-width: 200px;
+    min-width: 100px;
     font-family: 'Asap', sans-serif;
+    color: white;
 }
-
+p.mag-number {
+    -webkit-text-stroke: 3px #1697B7;
+    -webkit-text-stroke-width: thin;
+    margin: 0;
+    padding: 0;
+}
 div#weather_info {
     font-size: 14px;
     font-weight: bold;
-    height: 300px;
+    height: 250px;
     text-align: left;
     margin: 0;
     padding: 0;
-    padding-top: 25px;
+    padding-top: 15px;
     font-family: 'Asap', sans-serif;
 }
-
 div.col>ul {
     font-size: 10px;
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-
-div.col>li {
-    font-size: 10px;
-    margin-bottom: 5px;
+ul>li {
+    font-size: 16px;
+    margin: 7px 0;
     margin-left: 0;
 }
-
 circle {
     fill: pink;
     stroke: black;
     stroke-width: 1px;
 }
-
 circle.active {
     fill: red;
 }
-
 circle.inactive {
     fill: gray;
 }

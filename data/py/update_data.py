@@ -39,7 +39,7 @@ def update_weather(lat_search):
     # ----------------------------------
     # Creates a connection to our DB
     # Engine opens the door. Conn is the walk through sign
-    engine = create_engine("sqlite:///data/py/earthquake_weather.sqlite")
+    engine = create_engine("sqlite:///earthquake_weather.sqlite")
     conn = engine.connect()
     # Create a "Metadata" Layer That Abstracts our SQL Database
     # ----------------------------------

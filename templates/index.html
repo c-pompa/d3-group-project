@@ -7,55 +7,157 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Leaflet Step-1</title>
     <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+
+    <script src="./static/js/countUp.js"></script>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="./static/css/style.css">
+
+
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="container-fluid">
 
-        <div class="col align-self-center">
-            <div class="row">
-                <div class="col map-col" id="map">
-                    <!-- Map - One of three columns -->
-                </div>
-                <div class="col align-self-center">
-                    <div class="row row-specs" id='box1'>
-                        <div class="col viz" id="vizid">
 
-                        </div>
-
-                    </div>
-                    <div class="row row-specs" id='box2'>Info Box 2</div>
-                </div>
+        <!-- Header -->
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2">
+                1 of 3
             </div>
 
-            <!-- Leaflet JS-->
-            <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
-            <!-- d3 JavaScript -->
-            <script src="https://d3js.org/d3.v4.min.js"></script>
+            <div class="col-md-auto" id="header">
+                <img src="./static/images/logo.png" alt="logo p3" width="50px" id="logo">
+                <p>P3 : Positive Plotly Pegasi</p>
 
+            </div>
 
-            <!-- Leaflet-Choropleth JavaScript -->
-            <!-- <script type="text/javascript" src="static/js/choropleth.js"></script> -->
-
-            <!-- Our JS -->
-            <script type="text/javascript" src="./static/js/config.js"></script>
-            <script type="text/javascript" src="./static/js/logic.js"></script>
-            <script type="text/javascript" src="./static/js/leaflet-heat.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-            <link rel="stylesheet" type="text/css" href="./static/css/style.css">
+            <div class="col col-lg-2">
+                3 of 3
+            </div>
 
         </div>
+        <!-- Map & Temperature Information -->
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2">
+                1 of 3
+            </div>
+
+            <div class="col-md-4" id="map">
+                Map
+            </div>
+
+            <div class="col-md-4" id="temperature">
+                <div class="row justify-content-md-center" id='box1'>
+                    <!-- Information from map appears here -->
+                    <div class="col viz" id="vizid">
+
+                    </div>
+
+                </div>
+                <div class="row justify-content-md-center" id='box2'>
+                    <div class="col">
+                        analysis
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col col-lg-2">
+                1 of 3
+            </div>
+        </div>
+
+
+
+        <!--  Facts -->
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2">
+                1 of 3
+            </div>
+
+            <div class="col-md-auto" id='fact-boxes'>
+
+            </div>
+
+            <div class="col col-lg-2">
+                3 of 3
+            </div>
+
+        </div>
+
+
+        <!-- California Content -->
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2">
+                1 of 3
+            </div>
+
+            <div class="col-md-auto" id='california-data'>
+                california content
+            </div>
+
+            <div class="col col-lg-2">
+                3 of 3
+            </div>
+
+        </div>
+
+        <!--  Footer -->
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2">
+                1 of 3
+            </div>
+
+            <div class="col-md-auto" id='footer'>
+                closing statement? about us?
+            </div>
+
+            <div class="col col-lg-2">
+                3 of 3
+            </div>
+
+        </div>
+
+
+
+
+        <!--  Libraries to load -->
+        <!-- Leaflet JS-->
+        <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
+        <!-- d3 JavaScript -->
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <!-- Leaflet-Choropleth JavaScript -->
+        <!-- <script type="text/javascript" src="static/js/choropleth.js"></script> -->
+        <!-- Our JS -->
+        <script type="text/javascript" src="./static/js/config.js"></script>
+        <script type="text/javascript" src="./static/js/logic.js" type="module"></script>
+        <script type="text/javascript" src="./static/js/leaflet-heat.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="./static/css/style.css">
+
+    </div>
+    <script>
+        function countUpFunc() {
+            d3.json(`test/facts`, function(d) {
+                var countUp = new CountUp('myTargetElement', d[0]['count']);
+                countUp.start();
+
+            });
+        };
+        countUpFunc();
+    </script>
+
+
 </body>
 
 </html>
