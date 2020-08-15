@@ -26,14 +26,14 @@ function update_data(d_lat) {
         var tRow = box1.append("div").attr("class", "row");
 
         var tData = tRow.append("div").attr("class", "col").attr("id", "magnitude_info");
-        tData.html(`<div class='small_details'><strong>MAGNITUDE</strong></div><p class='mag-number'> ${d[3]['magnitude']} </p><div class='small_details'>City:  ${d[3]['city']}</div>`)
+        tData.html(`<span class='mag_title'>MAGNITUDE</span><p class='mag-number'> ${d[3]['magnitude']} </p><div class='small_details'>City:  ${d[3]['city']}</div>`)
 
-        var tData2 = tRow.append("div").attr("class", "col").attr("id", "weather_info");
-        tData2.html(`<h3>Temperatures </h3><div class='small_details'>(high/low)</div>
+        var tData2 = tRow.append("div").attr("class", "col-7").attr("id", "weather_info");
+        tData2.html(`<h3>Temperatures </h3>
         <ul> <li><p class='date'>${d[3]['date']}</p>${d[3]['maxtemp']}° / ${d[3]['mintemp']}°    |    Avg: ${d[3]['avgtemp']}°</li>
         <li><p class='date'>${d[2]['date']}</p>${d[2]['maxtemp']}° / ${d[2]['mintemp']}°    |    Avg: ${d[2]['avgtemp']}°</li>
         <li><p class='date'>${d[1]['date']}</p>${d[1]['maxtemp']}° / ${d[1]['mintemp']}°    |    Avg: ${d[1]['avgtemp']}°</li>
-        <li><p class='date'>${d[0]['date']}</p>${d[0]['maxtemp']}° / ${d[0]['mintemp']}°    |    Avg: ${d[0]['avgtemp']}°</li></ul>
+        <li><p class='date'>${d[0]['date']}</p>${d[0]['maxtemp']}° / ${d[0]['mintemp']}°    |    Avg: ${d[0]['avgtemp']}°</li></ul><span class='date'>(high/low)</span>
         `)
 
 
@@ -51,7 +51,7 @@ function factsRow() {
 
         // ${d[0]['count']}
         var tData = tRow.append("div").attr("class", "col").attr("id", "above6");
-        tData.html(`<h2 id='myTargetElement'>0</h2><h4>earthquakes above 6.0 </h4> `)
+        tData.html(`<h2 id='facts'>0</h2><h4>earthquakes above 6.0 </h4> `)
 
         var tData2 = tRow.append("div").attr("class", "col").attr("id", "highest_recorded_eq");
         tData2.html(`<div class='small_details'>magnitude of</div><h2>${d[0]['highest_magnitude']}</h2><h4>Highest recent recorded quake<br>location in ${d[0]['highest_location']}
@@ -295,7 +295,7 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
             var img = L.DomUtil.create('img');
 
             img.src = '../static/images/logo.png';
-            img.style.width = '50px';
+            img.style.width = '25px';
 
             return img;
         },

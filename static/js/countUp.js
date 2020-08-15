@@ -234,7 +234,7 @@ var CountUp = /** @class */ (function() {
 
 function countUpFunc() {
     d3.json(`test/facts`, function(d) {
-        var countUp = new CountUp('myTargetElement', d[0]['count']);
+        var countUp = new CountUp('facts', d[0]['count']);
         countUp.start();
 
     });
