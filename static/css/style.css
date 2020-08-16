@@ -80,7 +80,6 @@ li>p.date {
     background-color: teal;
     height: 500px;
     border-bottom: 5px solid #E35205;
-    margin-bottom: 5px;
     min-width: 50%;
 }
 
@@ -94,14 +93,21 @@ li>p.date {
 }
 
 #fact-boxes {
-    height: 200px;
-    background-color: #F3F3F3;
-    min-width: 800px;
+    height: 250px;
+    background-color: #e2ebf2;
+    /* min-width: 800px; */
+    border-width: thin;
+    border-style: solid;
+    border-color: #43505d;
+    margin: 0;
+    padding: 15px 15px 0px 15px;
+    text-align: center;
+    overflow: hidden;
 }
 
 #california-data {
     height: 200px;
-    background-color: #1697B7;
+    background-color: #083e66;
     min-width: 800px;
     border-bottom: 5px solid #E35205;
 }
@@ -118,9 +124,10 @@ li>p.date {
 }
 
 #box2 {
-    background-color: #1697B7;
+    background-color: #083e66;
     height: 250px;
     min-width: 400px;
+    border-bottom: 5px solid #E35205;
 }
 
 .row {
@@ -134,6 +141,12 @@ li>p.date {
     background-color: green;
 }
 
+h1 {
+    color: #43505d;
+    font-size: 40px;
+    font-weight: bold;
+}
+
 h2 {
     color: black;
     padding: 0;
@@ -144,13 +157,13 @@ h2 {
 
 .custom .leaflet-popup-tip,
 .custom .leaflet-popup-content-wrapper {
-    background: #5deb74;
+    background: #e0f56a;
     color: #234c5e;
 }
 
 .custom2 .leaflet-popup-tip,
 .custom2 .leaflet-popup-content-wrapper {
-    background: #e0f56a;
+    background: #e9c082;
     color: #234c5e;
 }
 
@@ -190,11 +203,11 @@ h2 {
 }
 
 .range1 {
-    background-color: #5deb74;
+    background-color: #e0f56a;
 }
 
 .range2 {
-    background-color: #e0f56a;
+    background-color: #e9c082;
 }
 
 .range3 {
@@ -232,6 +245,32 @@ div.small_details {
     margin: 0;
 }
 
+span.small_details {
+    font-size: 14px;
+    color: #083e66;
+    padding: 0;
+    margin: 0;
+}
+
+span.title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #083e66;
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    /* float:left;  remove */
+}
+
+
+/* hover over div, underline */
+
+div.col-md-8:hover span.title {
+    text-decoration: underline;
+    text-decoration-color: #38b0c9;
+    text-decoration-thickness: 4px;
+}
+
 div#magnitude_info {
     font-size: 60px;
     font-weight: bold;
@@ -248,7 +287,7 @@ div#magnitude_info {
 }
 
 p.mag-number {
-    -webkit-text-stroke: 3px #1697B7;
+    -webkit-text-stroke: 3px #212529;
     -webkit-text-stroke-width: thin;
     margin: 0;
     padding: 0px 0px 10px 0px;
@@ -277,17 +316,12 @@ ul>li {
     font-size: 16px;
     margin: 7px 0 0 0;
     margin-left: 0;
-    color: #43505d;
 }
 
 circle {
     fill: pink;
     stroke: black;
     stroke-width: 1px;
-}
-
-h2#facts {
-    color: #43505d;
 }
 
 circle.active {
@@ -302,6 +336,11 @@ circle.inactive {
 .col-lg,
 .col-md {
     padding: 0px 0px 0px 0px;
+}
+
+td {
+    padding: 10px 10px 0px 10px;
+    text-align: center;
 }
 
 
@@ -329,7 +368,9 @@ circle.inactive {
 /* // Medium devices (tablets, 768px and up) */
 
 @media (min-width: 768px) {
-    ...
+    #fact-boxes {
+        min-width: 800px;
+    }
 }
 
 
@@ -343,6 +384,9 @@ circle.inactive {
         min-width: 400px;
     }
     .justify-content:;
+    #fact-boxes {
+        min-width: 800px;
+    }
 }
 
 
@@ -354,5 +398,8 @@ circle.inactive {
     }
     #temperature {
         min-width: 400px;
+    }
+    #fact-boxes {
+        min-width: 800px;
     }
 }

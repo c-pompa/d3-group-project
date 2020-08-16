@@ -20,7 +20,7 @@ function cleanBox() {
 
 function update_data(d_lat) {
     d3.json(`test/update/${d_lat}`, function(d) {
-        // console.log(d)
+        console.log(d)
         var box1 = d3.select("div.viz");
 
         var tRow = box1.append("div").attr("class", "row");
@@ -30,31 +30,32 @@ function update_data(d_lat) {
 
         var tData2 = tRow.append("div").attr("class", "col-7").attr("id", "weather_info");
         tData2.html(`<h3>Temperatures </h3>
-        <ul> <li><p class='date'>${d[3]['date']}</p>${d[3]['maxtemp']}° / ${d[3]['mintemp']}°    |    Avg: ${d[3]['avgtemp']}°</li>
-        <li><p class='date'>${d[2]['date']}</p>${d[2]['maxtemp']}° / ${d[2]['mintemp']}°    |    Avg: ${d[2]['avgtemp']}°</li>
-        <li><p class='date'>${d[1]['date']}</p>${d[1]['maxtemp']}° / ${d[1]['mintemp']}°    |    Avg: ${d[1]['avgtemp']}°</li>
-        <li><p class='date'>${d[0]['date']}</p>${d[0]['maxtemp']}° / ${d[0]['mintemp']}°    |    Avg: ${d[0]['avgtemp']}°</li></ul><span class='date'>(high/low)</span>
+        <ul> <li><p class='date'>${d[3]['date']['month_day_year']}</p>${d[3]['maxtemp']}° / ${d[3]['mintemp']}°    |    Avg: ${d[3]['avgtemp']}° <a href="#" class="tooltip-test" title="Day of Earthquake"><img src="../static/images/noun_Earthquake_709338.svg" width="20px" ></a></li>
+        <li><p class='date'>${d[2]['date']['month_day_year']}</p>${d[2]['maxtemp']}° / ${d[2]['mintemp']}°    |    Avg: ${d[2]['avgtemp']}°</li>
+        <li><p class='date'>${d[1]['date']['month_day_year']}</p>${d[1]['maxtemp']}° / ${d[1]['mintemp']}°    |    Avg: ${d[1]['avgtemp']}°</li>
+        <li><p class='date'>${d[0]['date']['month_day_year']}</p>${d[0]['maxtemp']}° / ${d[0]['mintemp']}°    |    Avg: ${d[0]['avgtemp']}°</li></ul><span class='date'>(high/low)</span>
         `)
 
 
     });
 };
 
+
 function factsRow() {
     d3.json(`test/facts`, function(d) {
         console.log(d)
         var box1 = d3.select("div#fact-boxes");
 
-        var tRow = box1.append("div").attr("class", "row");
+        var tRow = box1.append("div").attr("class", "row align-items-center");
 
 
 
         // ${d[0]['count']}
-        var tData = tRow.append("div").attr("class", "col").attr("id", "above6");
-        tData.html(`<h2 id='facts'>0</h2><h4>earthquakes above 6.0 </h4> `)
+        var tData = tRow.append("td").attr("class", "facts1").attr("id", "above6");
+        tData.html(`<h1 id='facts'>0</h1> <h4>earthquakes<br>above 6.0</h4> `)
 
-        var tData2 = tRow.append("div").attr("class", "col").attr("id", "highest_recorded_eq");
-        tData2.html(`<div class='small_details'>magnitude of</div><h2>${d[0]['highest_magnitude']}</h2><h4>Highest recent recorded quake<br>location in ${d[0]['highest_location']}
+        var tData2 = tRow.append("td").attr("class", "facts1").attr("id", "highest_recorded_eq");
+        tData2.html(`<span class='small_details'>magnitude of</span> <h1>${d[0].highest_magnitude}</h1><h4>in ${d[0]['highest_location']}<br>on ${d[0]['date']['month_day']} is the<br>highest recorded
         `)
 
 
@@ -137,9 +138,15 @@ function overallTeamViz(locationData, magnitudeData) {
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 }
+$(document).ready(function() {
+    $('[data-toggle="tooltip"]').each(function() {
+        new Tooltip($(this), {
+            placement: 'top',
+        });
+    });
+});
 
-
-// Perform an API call to the Citi Bike Station Information endpoint
+// API call for earthquake data
 var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.5_month.geojson", function(data) {
 
 
@@ -167,11 +174,11 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
         }
 
         function getStyle(d) {
-            if (2.49 > d) {
+            if (4.9 > d) {
                 return 'custom';
-            } else if (3.0 > d) {
+            } else if (5.5 > d) {
                 return 'custom2';
-            } else if (d > 3.1) {
+            } else if (d > 5.6) {
                 return 'custom3';
             }
         };
@@ -223,16 +230,16 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     // Define variables for our tile layers
     var light = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-        maxZoom: 10,
-        minZoom: 4,
+        maxZoom: 8,
+        minZoom: 3,
         id: "light-v10",
         accessToken: API_KEY
     });
 
     var dark = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-        maxZoom: 10,
-        minZoom: 4,
+        maxZoom: 8,
+        minZoom: 3,
         id: "dark-v10",
         accessToken: API_KEY
     });
@@ -253,7 +260,7 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     // Create map object and set default layers
     var myMap = L.map("map", {
         center: [34.0522, -118.2437],
-        zoom: 5,
+        zoom: 4,
         zoomControl: false,
         layers: [light, earthquakeLayer]
     });
@@ -271,11 +278,11 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
         var div = L.DomUtil.create("div", "info legend ");
 
 
-        var legendInfo = `<h2>${features.length}</h2> Earthquakes recorded <br>in the past 7 days`;
+        var legendInfo = `<h2>${features.length}</h2> Earthquakes recorded <br>in the past 30 days`;
 
         div.innerHTML = legendInfo;
 
-        div.innerHTML += " <br>Magnitude Ranges: <ul class='range1'> 2.5 & below</ul><ul class='range2'> 2.5 - 3.0 </ul><ul class='range3'> 3.1+ </ul> ";
+        div.innerHTML += " <br>Magnitude Ranges: <ul class='range1'> 4.5 - 4.9</ul><ul class='range2'> 5.0 - 5.5 </ul><ul class='range3'> 5.6+ </ul> ";
         return div;
 
     };
