@@ -60,13 +60,34 @@ def weatherDataRetrieve(weather_data_get):
     weather_data = update_data.update_weather(weather_data_get)
     return jsonify(weather_data)
     
+
+# @app.route("/test/analysischart")
+# def weatherDataRetrieve():
+
+#     analysis_chart = update_data.analysisChartCall()
+#     return jsonify(analysis_chart)
+    
+
+
+
+
+
+
+
 @app.route("/test/facts")
 def factBoxes():
 
-    # print(weather_data_get)
+
     weather_facts = update_data.aboveSixQuakeCall()
     return jsonify(weather_facts)
     
+@app.route("/test/factsLatestQuake")
+def factBoxLatestQuake():
+
+    weather_facts5 = update_data.latestQuakesCall()
+    return jsonify(weather_facts5)
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

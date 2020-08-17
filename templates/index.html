@@ -24,7 +24,6 @@
 <body>
     <div class="container-fluid">
 
-
         <!-- Header -->
         <div class="row justify-content-lg-center">
             <div class="col col-lg-2">
@@ -32,14 +31,65 @@
             </div>
 
             <div class="col-lg-8" id="header">
-                <img src="./static/images/logo.png" alt="logo p3" width="50px" id="logo">
-                <p>P3 : Positive Plotly Pegasi</p>
+
+                <a data-toggle="collapse" href="#collapseMap" role="button" aria-expanded="false" aria-controls="collapseMap">
+                    <img src="./static/images/logo.png" alt="logo p3" width="50px" id="logo"></a>
+                <p class="groupname">P3 : Positive Plotly Pegasi</p>
+
+
+                <!-- Drop down content -->
+                <!-- <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                      Link with href
+                    </a>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                    </div>
+                </div> -->
+                <!-- End drop down content -->
             </div>
+
 
             <div class="col col-lg-2">
                 <!-- leave empty -->
             </div>
         </div>
+
+        <div class="collapse" id="collapseMap">
+            <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+            </div>
+        </div>
+
+
+
+        <!--  aboutus -->
+        <div class="row justify-content-lg-center">
+            <div class="col col-lg-2">
+                <!-- leave empty -->
+            </div>
+
+            <div class="col-md-8" id='aboutus'>
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <h1 class="display-4">Earthquake myths</h1>
+                        <p class="lead">Earthquakes occur during "earthquake weather." This myth that earthquakes occur during hot and dry weather dates to the ancient Greeks. We display the weather temperature on the day of the earthquake along with the previous 3 days
+                            leading up to the earthquake. The difference in weather temperature change will be charted with historical magnitude data. </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col col-lg-2">
+                <!-- leave empty -->
+            </div>
+
+        </div>
+
+
+
+
+
 
 
         <!-- Map & Temperature Information -->
@@ -71,7 +121,11 @@
         </div>
 
 
-
+        <div class="collapse" id="collapseFacts">
+            <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+            </div>
+        </div>
         <!--  Facts -->
         <div class="row justify-content-lg-center">
             <div class="col col-lg-2">
@@ -79,7 +133,32 @@
             </div>
 
             <div class="col-md-8" id='fact-boxes'>
-                <span class='title'>In the past month...</span>
+                <a data-toggle="collapse" href="#collapseFacts" role="button" aria-expanded="false" aria-controls="collapseFacts">
+                    <span class='title'>In the past month...</span></a>
+
+
+
+                <div id="table-area" class="latest5holder">
+                    <table id="latest5" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <span class="leq">Latest Earthquakes</span>
+                            </tr>
+                            <tr>
+                                <th class="table-head">Date</th>
+                                <th class="table-head">Country</th>
+                                <th class="table-head">Region</th>
+                                <th class="table-head">Magnitude</th>
+                                <th class="table-head">High</th>
+                                <th class="table-head">Low</th>
+                                <th class="table-head">Avg</th>
+                            </tr>
+                        </thead>
+                        <tbody id="target-table-display"></tbody>
+
+                    </table>
+                </div>
+
 
             </div>
 
@@ -89,7 +168,11 @@
 
         </div>
 
-
+        <div class="collapse" id="collapseCalifornia">
+            <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+            </div>
+        </div>
         <!-- California Content -->
         <div class="row justify-content-lg-center">
             <div class="col col-lg-2">
@@ -97,7 +180,8 @@
             </div>
 
             <div class="col-md-8" id='california-data'>
-                california content
+                <a data-toggle="collapse" href="#collapseCalifornia" role="button" aria-expanded="false" aria-controls="collapseCalifornia">
+                california content</a>
             </div>
 
             <div class="col col-lg-2">
@@ -113,7 +197,7 @@
             </div>
 
             <div class="col-md-8" id='footer'>
-                closing statement? about us?
+
             </div>
 
 

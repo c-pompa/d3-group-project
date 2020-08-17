@@ -2,7 +2,8 @@ body,
 html {
     padding: 0;
     margin: 0;
-    background-color: #F3F3F3;
+    background-color: #FFF;
+    /* background-color: #F3F3F3; */
 }
 
 #header {
@@ -64,7 +65,15 @@ li>p.date {
 .container {
     padding: 0;
     margin: 0;
-    background-color: yellow;
+    /* background-color: yellow; */
+}
+
+.display-4 {
+    font-size: 2.5rem;
+}
+
+.jumbotron {
+    background-color: #F3AD78;
 }
 
 .container-fluid {
@@ -94,28 +103,37 @@ li>p.date {
 
 #fact-boxes {
     height: 250px;
-    background-color: #e2ebf2;
-    /* min-width: 800px; */
-    border-width: thin;
-    border-style: solid;
-    border-color: #43505d;
     margin: 0;
-    padding: 15px 15px 0px 15px;
+    padding: 20px 20px 0px 15px;
     text-align: center;
     overflow: hidden;
+}
+
+.leaflet-container {
+    background: rgb(255, 0, 0);
+    outline: 0;
 }
 
 #california-data {
     height: 200px;
     background-color: #083e66;
-    min-width: 800px;
+    /* min-width: 800px; */
     border-bottom: 5px solid #E35205;
+}
+
+#aboutus {
+    /* height: 100px; */
+    background-color: #F3AD78;
+    /* min-width: 800px; */
+    border-bottom: 5px solid #E35205;
+    padding: 0px 35px 0px 45px;
+    margin: 0px;
 }
 
 #footer {
     height: 100px;
     background-color: #F3AD78;
-    min-width: 800px;
+    /* min-width: 800px; */
     border-bottom: 5px solid #E35205;
 }
 
@@ -142,7 +160,7 @@ li>p.date {
 }
 
 h1 {
-    color: #43505d;
+    color: #212529;
     font-size: 40px;
     font-weight: bold;
 }
@@ -150,7 +168,7 @@ h1 {
 h2 {
     color: black;
     padding: 0;
-    padding-left: 35px;
+    padding-left: 15px;
     margin: 0;
     font-size: 30px;
 }
@@ -186,6 +204,8 @@ h2 {
     border-radius: 5px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     column-count: 2;
+    width: 180px;
+    height: 76px;
 }
 
 .legend ul {
@@ -194,6 +214,7 @@ h2 {
     clear: both;
     list-style-type: none;
     text-align: center;
+    width: 75px;
 }
 
 .legend li {
@@ -262,6 +283,17 @@ span.title {
     /* float:left;  remove */
 }
 
+span.leq {
+    font-size: 16px;
+    font-weight: bold;
+    color: #083e66;
+    padding: 0;
+    padding-bottom: 10px;
+    margin: 0;
+    display: inline-block;
+    /* float:left;  remove */
+}
+
 
 /* hover over div, underline */
 
@@ -284,6 +316,11 @@ div#magnitude_info {
     padding: 15px;
     vertical-align: top;
     text-align: left;
+}
+
+p.groupname {
+    font-size: 20px;
+    font-family: 'Asap', sans-serif;
 }
 
 p.mag-number {
@@ -339,8 +376,22 @@ circle.inactive {
 }
 
 td {
-    padding: 10px 10px 0px 10px;
+    padding: 10px 15px 0px 5px;
     text-align: center;
+    width: 50%;
+}
+
+.latest5holder {
+    width: 52%;
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
+    float: right;
+}
+
+.table td,
+.table th {
+    padding: .3rem
 }
 
 

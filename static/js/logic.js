@@ -41,6 +41,32 @@ function update_data(d_lat) {
 };
 
 
+
+// function analysisChart() {
+//     d3.json(`test/update/${d_lat}`, function(d) {
+//         console.log(d)
+//         var box1 = d3.select("div.viz");
+
+//         var tRow = box1.append("div").attr("class", "row");
+
+//         var tData = tRow.append("div").attr("class", "col").attr("id", "magnitude_info");
+//         tData.html(`<span class='mag_title'>MAGNITUDE</span><p class='mag-number'> ${d[3]['magnitude']} </p><div class='small_details'>City:  ${d[3]['city']}</div>`)
+
+//         var tData2 = tRow.append("div").attr("class", "col-7").attr("id", "weather_info");
+//         tData2.html(`<h3>Temperatures </h3>
+//         <ul> <li><p class='date'>${d[3]['date']['month_day_year']}</p>${d[3]['maxtemp']}° / ${d[3]['mintemp']}°    |    Avg: ${d[3]['avgtemp']}° <a href="#" class="tooltip-test" title="Day of Earthquake"><img src="../static/images/noun_Earthquake_709338.svg" width="20px" ></a></li>
+//         <li><p class='date'>${d[2]['date']['month_day_year']}</p>${d[2]['maxtemp']}° / ${d[2]['mintemp']}°    |    Avg: ${d[2]['avgtemp']}°</li>
+//         <li><p class='date'>${d[1]['date']['month_day_year']}</p>${d[1]['maxtemp']}° / ${d[1]['mintemp']}°    |    Avg: ${d[1]['avgtemp']}°</li>
+//         <li><p class='date'>${d[0]['date']['month_day_year']}</p>${d[0]['maxtemp']}° / ${d[0]['mintemp']}°    |    Avg: ${d[0]['avgtemp']}°</li></ul><span class='date'>(high/low)</span>
+//         `)
+
+
+//     });
+// };
+
+
+
+
 function factsRow() {
     d3.json(`test/facts`, function(d) {
         console.log(d)
@@ -63,81 +89,38 @@ function factsRow() {
 };
 factsRow();
 
-//####################################################################
-// function shower(d, earthquakeMarkers) {
 
-//     earthquakeMarkers.append("circle")
-//         .attr("cx", "10")
-//         .attr("cy", "10")
-//         .attr("r", 4)
-//         .style("fill", "#ff5a00")
-//         .style("fill-opacity", .2)
-//         .style("stroke", "#ffe002")
-//         .style("stroke-opacity", .7)
-//         .transition()
-//         .duration(4000)
-//         .ease(Math.sqrt)
-//         .attr("r", d * 5)
-//         .style("fill-opacity", 1e-5)
-//         .style("stroke-opacity", 1e-8)
-//         .remove()
-//     setTimeout(shower, 5);
-// };
+function factsBoxesOpen() {
+    d3.json(`test/factsLatestQuake`, function(d) {
+        console.log(d)
+            // from data.js
+            // Assign a variable to retreive data from data.js
+            // var tableData = d;
 
-// function redraw() {
-//     svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-// };
-//####################################################################
+        // Table Body: Select the body of the table. We will add data to this area.
+        // Call using d3.select()
+        var tbody = d3.select("#target-table-display");
+
+        var tRow = tbody.append("tr").attr("class", "tr-data").attr("id", "");
+        tRow.html(`<td>${d[0]['date']['month_day']}</td><td>${d[0]['country']}</td><td>${d[0]['region']}</td><td>${d[0]['magnitude']}</td><td>${d[0]['maxtemp']}</td><td>${d[0]['mintemp']}</td><td>${d[0]['avgtemp']}</td>`)
+        var tRow = tbody.append("tr").attr("class", "tr-data").attr("id", "");
+        tRow.html(`<td>${d[1]['date']['month_day']}</td><td>${d[1]['country']}</td><td>${d[1]['region']}</td><td>${d[1]['magnitude']}</td><td>${d[1]['maxtemp']}</td><td>${d[1]['mintemp']}</td><td>${d[1]['avgtemp']}</td>`)
+        var tRow = tbody.append("tr").attr("class", "tr-data").attr("id", "");
+        tRow.html(`<td>${d[2]['date']['month_day']}</td><td>${d[2]['country']}</td><td>${d[2]['region']}</td><td>${d[2]['magnitude']}</td><td>${d[2]['maxtemp']}</td><td>${d[2]['mintemp']}</td><td>${d[2]['avgtemp']}</td>`)
+        var tRow = tbody.append("tr").attr("class", "tr-data").attr("id", "");
+        tRow.html(`<td>${d[3]['date']['month_day']}</td><td>${d[3]['country']}</td><td>${d[3]['region']}</td><td>${d[3]['magnitude']}</td><td>${d[3]['maxtemp']}</td><td>${d[3]['mintemp']}</td><td>${d[3]['avgtemp']}</td>`)
+        var tRow = tbody.append("tr").attr("class", "tr-data").attr("id", "");
+        tRow.html(`<td>${d[4]['date']['month_day']}</td><td>${d[4]['country']}</td><td>${d[4]['region']}</td><td>${d[4]['magnitude']}</td><td>${d[4]['maxtemp']}</td><td>${d[4]['mintemp']}</td><td>${d[4]['avgtemp']}</td>`)
 
 
-// Event handler to grab popup box info and paste to box1
-function overallTeamViz(locationData, magnitudeData) {
-    // svg params
-    var svgHeight = window.innerHeight;
-    var svgWidth = window.innerWidth;
-    // margins
-    var margin = {
-        top: 20,
-        right: 20,
-        bottom: 20,
-        left: 20
-    };
-    // chart area minus margins
-    var chartHeight = svgHeight - margin.top - margin.bottom;
-    var chartWidth = svgWidth - margin.left - margin.right;
 
 
-    // create svg container
-    var svg = d3.select("div.viz").append("svg")
-        .append("g")
-        .attr("id", "teamsG")
-        .attr("height", svgHeight)
-        .attr("width", svgWidth);
+    });
+};
+factsBoxesOpen();
 
-    d3.select("svg")
-        .append("g")
-        .attr("id", "teamsG")
-        .attr("transform", "translate(10,50)")
-        .selectAll("g")
-        .data(locationData)
-        .enter()
-        .append("g")
-        .attr("class", "overallG")
-        .attr("transform", function(d, i) { return "translate(" + (10 * 10) + ", 50%)" });
 
-    var teamG = d3.select("g.overallG");
 
-    // console.log(weather_data_get);
-
-    teamG
-        .append("circle")
-        .attr("r", 20);
-    teamG
-        .append("text")
-        .html(` ${magnitudeData}`)
-        .attr("transform", `translate(${margin.left}, ${margin.top})`);
-
-}
 $(document).ready(function() {
     $('[data-toggle="tooltip"]').each(function() {
         new Tooltip($(this), {
@@ -155,18 +138,34 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     var earthquakeMarkers = [];
     var heatArray = [];
 
+    // // Convert date from unix to traditional
+    // function timeConverter(UNIX_timestamp) {
+    //     var a = new Date(UNIX_timestamp * 1000);
+    //     (a.toGMTString() + "<br>" + a.toLocaleString());
+    //     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    //     var year = new_time.getFullYear();
+    //     var month = months[new_time.getMonth()];
+    //     var date = new_time.getDate();
+    //     var time = month + ' ' + date;
+    //     return time;
+    // }
+
 
     for (var i = 0; i < features.length; i++) {
         // create custom icon
         var earthquakeIcon = L.icon({
             iconUrl: '../static/images/noun_Earthquake_709338.svg',
-            iconSize: [features[i].properties.mag * 6, features[i].properties.mag * 12], // size of the icon
+            iconSize: [features[i].properties.mag * 6, features[i].properties.mag * 14], // size of the icon
             popupAnchor: [0, -15]
         });
 
-        // create popup contents
-        var customPopup = `<b>Location:</b> <context id='location'> ${features[i].properties.place} </context> <br> <b>Magnitude:</b>  <context id='magnitude'> ${features[i].properties.mag} </context> <hr> <p class='littledetails'>Lat: <context id='lat'>${features[i].geometry.coordinates[1]} </context>, Long:<context id='long'>${features[i].geometry.coordinates[0]}</context>, Date: <context id='date'> ${features[i].properties.time} </context><p>`;
 
+
+        // create popup contents
+        var customPopup = `<b>Location:</b> <context id='location'> ${features[i].properties.place} </context> <br> <b>Magnitude:</b>  <context id='magnitude'> ${features[i].properties.mag} </context> <hr> <p class='littledetails'>Lat: <context id='lat'>${features[i].geometry.coordinates[1]} </context>, Long:<context id='long'>${features[i].geometry.coordinates[0]}</context>, 
+    
+        <p>`;
+        // Date: <context id='date'> ${timeConverter(features[i].properties.time)}, ${features[i].properties.time} </context>
         // specify popup options 
         var customOptions = {
             'maxWidth': '500',
@@ -195,15 +194,8 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
                 console.log(d_lat);
                 cleanBox();
                 update_data(d_lat);
-                // overallTeamViz(d, d2);
-                // d3.select("#box1").selectAll("div")
-                //     .data([d])
-                //     .enter() // creates placeholder for new data
-                //     .append("div") // appends a div to placeholder
-                //     .classed("col", true) // sets the class of the new div
-                //     .html(function(d, i) {
-                //         return ` <h2>${d}${i} </h2> `;
-                //     }); // sets the html in the div to an image tag with the link
+                // analysisChart(d2);
+
             })
         )
 
@@ -278,11 +270,11 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
         var div = L.DomUtil.create("div", "info legend ");
 
 
-        var legendInfo = `<h2>${features.length}</h2> Earthquakes recorded <br>in the past 30 days`;
+        var legendInfo = `<h2>${features.length}</h2> Earthquakes<br>/ 30 days`;
 
         div.innerHTML = legendInfo;
 
-        div.innerHTML += " <br>Magnitude Ranges: <ul class='range1'> 4.5 - 4.9</ul><ul class='range2'> 5.0 - 5.5 </ul><ul class='range3'> 5.6+ </ul> ";
+        div.innerHTML += " <br>Magnitude: <ul class='range1'> 4.5 - 4.9</ul><ul class='range2'> 5.0 - 5.5 </ul><ul class='range3'> 5.6+ </ul> ";
         return div;
 
     };
