@@ -1,5 +1,6 @@
-// var url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2020-08-08T07:00&endtime=2020-08-9T07:00&minmagnitude=2"
-// var url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2010-01-09T07:00&endtime=2010-01-10T07:00&minmagnitude=2"
+// var url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2019-07-05T07:00&endtime=2019-07-06T07:00&minmagnitude=5"
+// var url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2010-01-09T07:00&endtime=2010-01-10T07:00&minmagnitude=4"
+// var url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2010-04-04T07:00&endtime=2010-04-05T07:00&minmagnitude=5"
 var url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2011-03-11T00:00&endtime=2011-03-12T00:00&minmagnitude=6"
 
 d3.json(url, function(data) {
@@ -24,8 +25,9 @@ function createFeatures(earthquakeData) {
               "</h3><hr><p>" + new Date(quakes.properties.time) + "</p>");
           }
       });
-    //   var temps_data = "../../data/py/CA_temps_2020Aug08.json";
-    //   var temps_data = "../../data/py/CA_temps_2010Jan09.json";
+      // var temps_data = "../../data/py/CA_temps_2019Jul05.json";
+      // var temps_data = "../../data/py/CA_temps_2010Jan09.json";
+      // var temps_data = "../../data/py/CA_temps_2010Apr04.json";
       var temps_data = "../../data/py/Jap_temps_2011Mar11.json";
 
       d3.json(temps_data, function(response) {
