@@ -11,6 +11,10 @@ from sqlalchemy import create_engine, inspect
 from sqlalchemy import Column, Integer, String, Text, DateTime, Float, Boolean, ForeignKey, desc
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
+import pandas as pd
+import numpy as np
+import json
+
 
 def update_weather(lat_search):
     # Sets an object to utilize the default declarative base in SQL Alchemy
@@ -324,70 +328,129 @@ def latestQuakesCall():
 ## Analysis Chart
 ##################################################################
 
-# def analysisChartCall():
-#     # Sets an object to utilize the default declarative base in SQL Alchemy
-#     Base = declarative_base()
-#     ## Class base template to upload to sqlite
-#     class WeatherSeries(Base):
-#         __tablename__ = 'weatherSeries'
+def analysisChartCall():
+    # Sets an object to utilize the default declarative base in SQL Alchemy
+    Base = declarative_base()
+    ## Class base template to upload to sqlite
+    class WeatherSeries(Base):
+        __tablename__ = 'weatherSeries'
 
-#         id = Column(Integer, primary_key=True)
-#         city = Column(String(50))
-#         country = Column(String(200))
-#         region = Column(String(80))
-#         avgtemp = Column(Float)
-#         date = Column(String(12))
-#         date_epoch = Column(Float)
-#         maxtemp = Column(Float)
-#         mintemp = Column(Float)
-#         sunhour = Column(Float)
-#         totalsnow = Column(Float)
-#         uv_index = Column(Float)
-#         magnitude = Column(Float)
-#         place = Column(String(80))
-#         lat = Column(String(12))
-#         long = Column(String(12))
+        id = Column(Integer, primary_key=True)
+        city = Column(String(50))
+        country = Column(String(200))
+        region = Column(String(80))
+        avgtemp = Column(Float)
+        date = Column(String(12))
+        date_epoch = Column(Float)
+        maxtemp = Column(Float)
+        mintemp = Column(Float)
+        sunhour = Column(Float)
+        totalsnow = Column(Float)
+        uv_index = Column(Float)
+        magnitude = Column(Float)
+        place = Column(String(80))
+        lat = Column(String(12))
+        long = Column(String(12))
 
-#     # Create Database Connection
-#     # ----------------------------------
-#     # Creates a connection to our DB
-#     # Engine opens the door. Conn is the walk through sign
-#     engine = create_engine("sqlite:///earthquake_weather.sqlite")
-#     conn = engine.connect()
-#     # Create a "Metadata" Layer That Abstracts our SQL Database
-#     # ----------------------------------
-#     # Create (if not already in existence) the tables associated with our classes.
-#     Base.metadata.create_all(engine)
-#     # Create a Session Object to Connect to DB
-#     # ----------------------------------
-#     session = Session(bind=engine)
+    # Create Database Connection
+    # ----------------------------------
+    # Creates a connection to our DB
+    # Engine opens the door. Conn is the walk through sign
+    engine = create_engine("sqlite:///earthquake_weather.sqlite")
+    conn = engine.connect()
+    # Create a "Metadata" Layer That Abstracts our SQL Database
+    # ----------------------------------
+    # Create (if not already in existence) the tables associated with our classes.
+    Base.metadata.create_all(engine)
+    # Create a Session Object to Connect to DB
+    # ----------------------------------
+    session = Session(bind=engine)
 
-#     def latestQuakes():
-#         Base = automap_base()
-#         Base.prepare(engine, reflect=True)
+    def analysisChart():
+        Base = automap_base()
+        Base.prepare(engine, reflect=True)
+        weather_table = Base.classes.weatherSeries
+        analysis_container = session.query(weather_table).order_by(desc(weather_table.date)).all()        
+        analysis_list_temp = []
+        x=1
 
-#         weather_table = Base.classes.weatherSeries
-#         weather_container = session.query(weather_table).order_by(desc(weather_table.date)).all()        
-#         weather_facts5 = []
-#         weather_facts5_done = []
+        for data in analysis_container:
+            # get specific data from db
+            container = {
+                "date": data.date,
+                "magnitude": data.magnitude,
+                "maxtemp": data.maxtemp,
+                "mintemp": data.mintemp,
+        #         "avgtemp": data.avgtemp,
+                "lat": data.lat,
+                }
+            analysis_list_temp.append(container)
 
+        # Create df for parsing    
+        temp_df = pd.DataFrame(analysis_list_temp)
+        # Sort by lat and date, reset index
+        temp_df = temp_df.sort_values(by=['lat', 'date'], ascending=False).reset_index(drop=True)
 
-#         for data in weather_container:
+        # Make copy of df, remove 2nd and 3rd log keeping 1st and 4th log of one eq entry.
+        run_df = temp_df.copy()
+        while x < len(temp_df.index):
+            run_df=run_df.drop(x)
+            x+=1
+            run_df=run_df.drop(x)
+            x+=3
 
+        # Reset index 
+        run_df = run_df.reset_index(drop=True) 
 
-#         temp_diff = 
-#         container = {
-       
-#             "magnitude": data.magnitude,
-#             "maxtemp": data.maxtemp,
-#             "mintemp": data.mintemp, 
+        # get difference of weather change from day of eq and few days before
+        i = 0
+        new_col = []
+        # Icon list will tell style which icon to display
+        icon_list = []
+        while i < len(run_df.index):
+        #     for data in run_df.index:
+            first = run_df.iloc[i,2]
+            second = run_df.iloc[i+1, 2]
+            difference = first - second
+            new_col.append(difference)
+            new_col.append(difference)
+            i+=2    
+        # Add new list to df as a new column  
+        run_df['difference'] = new_col     
+        for x in run_df['difference']:
+            if x > 0:
+                icon = "up"
+                icon_list.append(icon)
+            elif x == 0:
+                icon = "nochange"
+                icon_list.append(icon)
+            else:
+                icon = "down"
+                icon_list.append(icon)
 
-#             }
-#             weather_facts5.append(container)
-        
-#         return weather_facts5
+        # Add new list to df as a new column
+        run_df['icon'] = icon_list    
+        # select only the columns we need
+        run_df = run_df[['date','magnitude','lat','difference','icon']]
 
-#     weather_facts5 = latestQuakes()
+        # # Turn df into list of tuples
+        records = run_df.to_records(index=False)
+        analysis_chart = list(records)
 
-#     # Return results
-#     return weather_facts5
+        # Create list of tuple
+        analysis_list = []
+        for data in analysis_chart:
+            container2 = {
+                "date": data.date, 
+                "magnitude": data.magnitude, 
+                "lat": data.lat, 
+                "difference": data.difference, 
+                "icon": data.icon,
+                }
+            analysis_list.append(container2)
+        return analysis_list
+
+    analysis_list = analysisChart()
+
+    return analysis_list
+    

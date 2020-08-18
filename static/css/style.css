@@ -65,6 +65,7 @@ li>p.date {
 .container {
     padding: 0;
     margin: 0;
+    background-image: "./static/images/earthquakbackgroud.png";
     /* background-color: yellow; */
 }
 
@@ -102,11 +103,34 @@ li>p.date {
 }
 
 #fact-boxes {
-    height: 250px;
+    /* height: 250px; */
     margin: 0;
-    padding: 20px 20px 0px 15px;
+    padding: 20px 20px 15px 0px;
     text-align: center;
     overflow: hidden;
+}
+
+.tooltip {
+    background-color: #e2ebf2;
+    padding: 5px;
+    border: 1px solid #4c5865;
+}
+
+h2.historic-title {
+    color: #fefefe;
+    padding: 15px 0px 15px 0px;
+    font-size: 25px;
+}
+
+h2.aboutus-title {
+    color: #fefefe;
+    padding: 15px 0px 0px 0px;
+    font-size: 25px;
+}
+
+h2.teamname {
+    font-size: 23px;
+    padding-top: 25px;
 }
 
 .leaflet-container {
@@ -115,10 +139,12 @@ li>p.date {
 }
 
 #california-data {
-    height: 200px;
+    height: 500px;
     background-color: #083e66;
     /* min-width: 800px; */
     border-bottom: 5px solid #E35205;
+    padding: 20px 30px 15px 30px;
+    font-family: 'Asap', sans-serif;
 }
 
 #aboutus {
@@ -131,10 +157,11 @@ li>p.date {
 }
 
 #footer {
-    height: 100px;
+    height: 300px;
     background-color: #F3AD78;
     /* min-width: 800px; */
     border-bottom: 5px solid #E35205;
+    padding: 20px 30px 15px 30px;
 }
 
 #box1 {
@@ -151,7 +178,6 @@ li>p.date {
 .row {
     padding: 0;
     margin: 0;
-    /* background-color: yellow; */
 }
 
 .row-specs {
@@ -246,12 +272,34 @@ div.leaflet-popup-content p {
     padding: 0;
 }
 
-svg {
-    height: 300px;
+g.group_chart {
     width: 100%;
-    border: 1px solid gray;
+}
+
+svg {
+    height: 250px;
+    width: 100%;
+    /* border: 1px solid gray; */
     margin: 0;
     padding: 0;
+}
+
+text.axis-text {
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+}
+
+.grid {
+    margin: 30px;
+    opacity: .2;
+}
+
+.chart {
+    background-color: #cedfec;
+    height: 245px;
+    margin: 0;
+    padding: 0px;
 }
 
 div#viz {
@@ -292,6 +340,14 @@ span.leq {
     margin: 0;
     display: inline-block;
     /* float:left;  remove */
+}
+
+span.smalltext {
+    margin: 0px 0px 20px 0px;
+}
+
+#footertext {
+    margin: 20px 0px;
 }
 
 
@@ -349,10 +405,24 @@ div.col-7>ul {
     padding: 0;
 }
 
+ul {
+    font-weight: bold;
+    display: inline-block;
+    color: black;
+}
+
 ul>li {
     font-size: 16px;
+    font-weight: normal;
     margin: 7px 0 0 0;
     margin-left: 0;
+    list-style-type: none;
+    color: black;
+}
+
+ul>li a {
+    color: #083e66;
+    font-weight: bold;
 }
 
 circle {
@@ -376,7 +446,7 @@ circle.inactive {
 }
 
 td {
-    padding: 10px 15px 0px 5px;
+    padding: 10px 30px 0px 0px;
     text-align: center;
     width: 50%;
 }

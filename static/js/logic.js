@@ -1,26 +1,30 @@
 // Add Techtonic Plate Later as an option
 var techtonicLayer = L.layerGroup();
-d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json", function(techtonicData) {
-    L.geoJSON(techtonicData, {
-        color: 'orange',
-        weight: 2
-    }).addTo(techtonicLayer);
-});
+// Function: Add temperature data after clicking marker on map
+function techtonic() {
+    d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json", function(techtonicData) {
 
+        L.geoJSON(techtonicData, {
+            color: 'orange',
+            weight: 2
+        }).addTo(techtonicLayer);
+    })
+};
+techtonic();
 
-// Clean box1 before loading new data. If not cleaned, info will overlap
+// Clean box1 before loading new data. If not cleaned, clean again-- info will overlap if not. 
 function cleanBox() {
     var svgArea = d3.select("div.viz").selectAll("*").remove();
     if (!svgArea.empty()) {
         svgArea.remove();
     };
-    console.log('cleaned.....')
+    // console.log('cleaned.....')
 };
 
-
+// Function: Add temperature data after clicking marker on map
 function update_data(d_lat) {
-    d3.json(`test/update/${d_lat}`, function(d) {
-        console.log(d)
+    d3.json(`site/update/${d_lat}`, function(d) {
+        // console.log(d)
         var box1 = d3.select("div.viz");
 
         var tRow = box1.append("div").attr("class", "row");
@@ -33,50 +37,288 @@ function update_data(d_lat) {
         <ul> <li><p class='date'>${d[3]['date']['month_day_year']}</p>${d[3]['maxtemp']}° / ${d[3]['mintemp']}°    |    Avg: ${d[3]['avgtemp']}° <a href="#" class="tooltip-test" title="Day of Earthquake"><img src="../static/images/noun_Earthquake_709338.svg" width="20px" ></a></li>
         <li><p class='date'>${d[2]['date']['month_day_year']}</p>${d[2]['maxtemp']}° / ${d[2]['mintemp']}°    |    Avg: ${d[2]['avgtemp']}°</li>
         <li><p class='date'>${d[1]['date']['month_day_year']}</p>${d[1]['maxtemp']}° / ${d[1]['mintemp']}°    |    Avg: ${d[1]['avgtemp']}°</li>
-        <li><p class='date'>${d[0]['date']['month_day_year']}</p>${d[0]['maxtemp']}° / ${d[0]['mintemp']}°    |    Avg: ${d[0]['avgtemp']}°</li></ul><span class='date'>(high/low)</span>
+        <li><p class='date'>${d[0]['date']['month_day_year']}</p>${d[0]['maxtemp']}° / ${d[0]['mintemp']}°    |    Avg: ${d[0]['avgtemp']}°</li></ul><br><span class='date'>(high/low)</span>
         `)
-
 
     });
 };
 
+// ###############################################################################
+// Function: Generate Analysis Chart by map
+async function analysisChart() {
 
+    var svgWidth = 350;
+    var svgHeight = 180;
 
-// function analysisChart() {
-//     d3.json(`test/update/${d_lat}`, function(d) {
-//         console.log(d)
-//         var box1 = d3.select("div.viz");
+    var margin = {
+        top: 10,
+        right: 5,
+        bottom: 0,
+        left: 50
+    };
 
-//         var tRow = box1.append("div").attr("class", "row");
-
-//         var tData = tRow.append("div").attr("class", "col").attr("id", "magnitude_info");
-//         tData.html(`<span class='mag_title'>MAGNITUDE</span><p class='mag-number'> ${d[3]['magnitude']} </p><div class='small_details'>City:  ${d[3]['city']}</div>`)
-
-//         var tData2 = tRow.append("div").attr("class", "col-7").attr("id", "weather_info");
-//         tData2.html(`<h3>Temperatures </h3>
-//         <ul> <li><p class='date'>${d[3]['date']['month_day_year']}</p>${d[3]['maxtemp']}° / ${d[3]['mintemp']}°    |    Avg: ${d[3]['avgtemp']}° <a href="#" class="tooltip-test" title="Day of Earthquake"><img src="../static/images/noun_Earthquake_709338.svg" width="20px" ></a></li>
-//         <li><p class='date'>${d[2]['date']['month_day_year']}</p>${d[2]['maxtemp']}° / ${d[2]['mintemp']}°    |    Avg: ${d[2]['avgtemp']}°</li>
-//         <li><p class='date'>${d[1]['date']['month_day_year']}</p>${d[1]['maxtemp']}° / ${d[1]['mintemp']}°    |    Avg: ${d[1]['avgtemp']}°</li>
-//         <li><p class='date'>${d[0]['date']['month_day_year']}</p>${d[0]['maxtemp']}° / ${d[0]['mintemp']}°    |    Avg: ${d[0]['avgtemp']}°</li></ul><span class='date'>(high/low)</span>
-//         `)
-
-
-//     });
-// };
+    var width = svgWidth - margin.left - margin.right;
+    var height = svgHeight - margin.top - margin.bottom;
 
 
 
+    // Create an SVG wrapper, append an SVG group that will hold our chart,
+    // and shift the latter by left and top margins.
+    var svg = d3
+        .select(".chart")
+        .append("svg")
+        .attr("width", 200)
+        .attr("height", svgHeight);
 
+
+    // Append an SVG group
+    // Move graph group- holds everything besides svg area
+    var chartGroup = svg.append("g")
+        .attr("transform", `translate(60, 27)`)
+        .attr("class", `group_chart`);
+
+
+
+    // Initial Params
+    var chosenXAxis = "magnitude";
+
+    // function used for updating x-scale var upon click on axis label
+    function xScale(eqdata, chosenXAxis) {
+        // create scales
+        var xLinearScale = d3.scaleLinear()
+            .domain([d3.min(eqdata, d => d[chosenXAxis]) * 0.8,
+                d3.max(eqdata, d => d[chosenXAxis])
+                // d3.max(eqdata, d => d[chosenXAxis]) * 1.2
+            ])
+            .range([0, width]);
+
+        return xLinearScale;
+
+    }
+
+    // function used for updating xAxis var upon click on axis label
+    function renderAxes(newXScale, xAxis) {
+        var bottomAxis = d3.axisBottom(newXScale);
+
+        xAxis.transition()
+            .duration(1000)
+            .call(bottomAxis);
+
+        return xAxis;
+    }
+
+    // function used for updating circles group with a transition to
+    // new circles
+    function renderCircles(circlesGroup, newXScale, chosenXAxis) {
+
+        circlesGroup.transition()
+            .duration(1000)
+            .attr("cx", d => newXScale(d[chosenXAxis]));
+
+        return circlesGroup;
+    }
+
+    // function used for updating circles group with new tooltip
+    function updateToolTip(chosenXAxis, circlesGroup) {
+
+        var label;
+
+        // if (chosenXAxis === "magnitude") {
+        //     label = "Magnitude:";
+        // } else {
+        //     label = " ";
+        // }
+
+        var toolTip = d3.tip()
+            .attr("class", "tooltip")
+            .offset([80, -60])
+            .html(function(d) {
+                return (`Magnitide: ${d.magnitude}<br>
+                Temp Diff: ${d.difference}°`);
+            });
+
+        circlesGroup.call(toolTip);
+
+        circlesGroup.on("mouseover", function(data) {
+                toolTip.show(data);
+            })
+            // onmouseout event
+            .on("mouseout", function(data, index) {
+                toolTip.hide(data);
+            });
+
+        return circlesGroup;
+    }
+    // ##########################
+    // Grid Lines
+    // gridlines in x axis function
+    function make_x_gridlines(xLinearScale) {
+        return d3.axisBottom(xLinearScale)
+            .ticks(8)
+    }
+
+    // gridlines in y axis function
+    function make_y_gridlines(yLinearScale) {
+        return d3.axisLeft(yLinearScale)
+            .ticks(1)
+    }
+
+
+    d3.json(`site/chart`, function(eqdata) {
+        console.log(eqdata);
+
+
+        // parse data
+        eqdata.forEach(function(data) {
+            data.difference = +data.difference;
+            data.magnitude = +data.magnitude;
+        });
+
+        // xLinearScale function above csv import
+        var xLinearScale = xScale(eqdata, chosenXAxis);
+
+        // Create y scale function
+        var yLinearScale = d3.scaleLinear()
+            .domain([-15, d3.max(eqdata, d => d.difference)])
+            .range([height, 0]);
+
+        // ######################
+        // Gridlines
+        // add the X gridlines
+        svg.append("g")
+            .attr("class", "grid")
+            .attr("transform", "translate(60,197)")
+            .call(make_x_gridlines(xLinearScale)
+                .tickSize(-height)
+                .tickFormat("")
+            )
+
+        // add the Y gridlines
+        svg.append("g")
+            .attr("class", "grid")
+            .attr("transform", "translate(60,27)")
+            .call(make_y_gridlines(yLinearScale)
+                .tickSize(-width)
+                .tickFormat("")
+            )
+
+
+        // Create initial axis functions
+        var bottomAxis = d3.axisBottom(xLinearScale);
+        var leftAxis = d3.axisLeft(yLinearScale);
+
+
+        // append x axis
+        var xAxis = chartGroup.append("g")
+            .classed("x-axis", true)
+            .attr("transform", `translate(0, ${height})`)
+            .call(bottomAxis);
+
+
+
+        // append y axis
+        chartGroup.append("g")
+            .call(leftAxis);
+
+        // append initial circles
+        var circlesGroup = chartGroup.selectAll("circle")
+            .data(eqdata)
+            .enter()
+            .append("circle")
+            .attr("cx", d => xLinearScale(d[chosenXAxis]))
+            .attr("cy", d => yLinearScale(d.difference))
+            .attr("r", 2)
+            .attr("fill", "#F3AD78")
+            .attr("opacity", ".3");
+
+        // Create group for two x-axis labels
+        var labelsGroup = chartGroup.append("g")
+            .attr("transform", `translate(${width / 2}, ${height + 10})`);
+
+        var magnitudeLabel = labelsGroup.append("text")
+            .attr("x", -75)
+            .attr("y", 25)
+            .attr("value", "magnitude") // value to grab for event listener
+            .classed("axis-text", true)
+            .text("Magnitude / All earthquakes");
+
+        // append y axis
+        chartGroup.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x", 10 - (height))
+            .attr("dy", "1em")
+            .classed("axis-text", true)
+            .text("Temperature Difference");
+
+        // updateToolTip function above csv import
+        var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+
+        // x axis labels event listener
+        labelsGroup.selectAll("text")
+            .on("click", function() {
+                // get value of selection
+                var value = d3.select(this).attr("value");
+                if (value !== chosenXAxis) {
+
+                    // replaces chosenXAxis with value
+                    chosenXAxis = value;
+
+                    // console.log(chosenXAxis)
+
+                    // functions here found above csv import
+                    // updates x scale for new data
+                    xLinearScale = xScale(eqdata, chosenXAxis);
+
+                    // updates x axis with transition
+                    xAxis = renderAxes(xLinearScale, xAxis);
+
+                    // updates circles with new x values
+                    circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
+
+                    // updates tooltips with new info
+                    circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+
+                    // changes classes to change bold text
+                    if (chosenXAxis === "num_albums") {
+                        // albumsLabel
+                        //     .classed("active", true)
+                        //     .classed("inactive", false);
+                        magnitudeLabel
+                            .classed("active", false)
+                            .classed("inactive", true);
+                    } else {
+                        // albumsLabel
+                        //     .classed("active", false)
+                        //     .classed("inactive", true);
+                        magnitudeLabel
+                            .classed("active", true)
+                            .classed("inactive", false);
+                    }
+                }
+            });
+    })
+
+
+};
+analysisChart().then(result => {
+    console.log(result); // This is not called because of the error
+}).catch(error => {
+    console.log(error); // Error: Oh dear! It's broken!
+});
+
+
+// ###############################################################################
+
+// Function: Generate Facts 
 function factsRow() {
-    d3.json(`test/facts`, function(d) {
-        console.log(d)
+    d3.json(`site/facts`, function(d) {
+        // console.log(d)
         var box1 = d3.select("div#fact-boxes");
 
         var tRow = box1.append("div").attr("class", "row align-items-center");
 
 
-
-        // ${d[0]['count']}
         var tData = tRow.append("td").attr("class", "facts1").attr("id", "above6");
         tData.html(`<h1 id='facts'>0</h1> <h4>earthquakes<br>above 6.0</h4> `)
 
@@ -84,21 +326,14 @@ function factsRow() {
         tData2.html(`<span class='small_details'>magnitude of</span> <h1>${d[0].highest_magnitude}</h1><h4>in ${d[0]['highest_location']}<br>on ${d[0]['date']['month_day']} is the<br>highest recorded
         `)
 
-
     });
 };
 factsRow();
 
-
+// Function: Generate table for latest earthquakes
 function factsBoxesOpen() {
-    d3.json(`test/factsLatestQuake`, function(d) {
-        console.log(d)
-            // from data.js
-            // Assign a variable to retreive data from data.js
-            // var tableData = d;
-
-        // Table Body: Select the body of the table. We will add data to this area.
-        // Call using d3.select()
+    d3.json(`site/factsLatestQuake`, function(d) {
+        // console.log(d)
         var tbody = d3.select("#target-table-display");
 
         var tRow = tbody.append("tr").attr("class", "tr-data").attr("id", "");
@@ -138,19 +373,6 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
     var earthquakeMarkers = [];
     var heatArray = [];
 
-    // // Convert date from unix to traditional
-    // function timeConverter(UNIX_timestamp) {
-    //     var a = new Date(UNIX_timestamp * 1000);
-    //     (a.toGMTString() + "<br>" + a.toLocaleString());
-    //     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    //     var year = new_time.getFullYear();
-    //     var month = months[new_time.getMonth()];
-    //     var date = new_time.getDate();
-    //     var time = month + ' ' + date;
-    //     return time;
-    // }
-
-
     for (var i = 0; i < features.length; i++) {
         // create custom icon
         var earthquakeIcon = L.icon({
@@ -158,7 +380,6 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
             iconSize: [features[i].properties.mag * 6, features[i].properties.mag * 14], // size of the icon
             popupAnchor: [0, -15]
         });
-
 
 
         // create popup contents
@@ -177,7 +398,7 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
                 return 'custom';
             } else if (5.5 > d) {
                 return 'custom2';
-            } else if (d > 5.6) {
+            } else if (d > 5.51) {
                 return 'custom3';
             }
         };
@@ -186,7 +407,6 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
         earthquakeMarkers.push(
             L.marker([features[i].geometry.coordinates[1], features[i].geometry.coordinates[0]], { icon: earthquakeIcon })
             .bindPopup(customPopup, customOptions)
-
             .on('click', function(d, i) {
                 d = d3.select("div.leaflet-popup-content > #location").html();
                 d2 = d3.select("div.leaflet-popup-content > #magnitude").html();
@@ -194,11 +414,9 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
                 console.log(d_lat);
                 cleanBox();
                 update_data(d_lat);
-                // analysisChart(d2);
-
+                // analysisChart();
             })
-        )
-
+        );
 
         if (location) {
             techtonicArray.push([]);
@@ -254,14 +472,13 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
         center: [34.0522, -118.2437],
         zoom: 4,
         zoomControl: false,
+        passive: true,
         layers: [light, earthquakeLayer]
     });
 
     // Pass our map layers into our layer control
     // Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps).addTo(myMap);
-    //Create SVG element
-
 
 
     // Set up the legend
@@ -278,13 +495,14 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
         return div;
 
     };
-
     // Adding legend to the map
     legend.addTo(myMap);
+
 
     L.control.zoom({
         position: 'bottomright'
     }).addTo(myMap);
+
 
     // ########################################
     // Water Mark
@@ -306,7 +524,6 @@ var data = d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/4.
         return new L.Control.Watermark(opts);
     }
     L.control.watermark({ position: 'topleft' }).addTo(myMap);
-
 
 
 });

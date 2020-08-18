@@ -34,19 +34,8 @@
 
                 <a data-toggle="collapse" href="#collapseMap" role="button" aria-expanded="false" aria-controls="collapseMap">
                     <img src="./static/images/logo.png" alt="logo p3" width="50px" id="logo"></a>
-                <p class="groupname">P3 : Positive Plotly Pegasi</p>
-
-
-                <!-- Drop down content -->
-                <!-- <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                      Link with href
-                    </a>
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                    </div>
-                </div> -->
-                <!-- End drop down content -->
+                <h2 class="teamname">P3 : Positive Plotly Pegasi</h2>
+                <!-- <p class="groupname">P3 : Positive Plotly Pegasi</p> -->
             </div>
 
 
@@ -54,14 +43,6 @@
                 <!-- leave empty -->
             </div>
         </div>
-
-        <div class="collapse" id="collapseMap">
-            <div class="card card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-            </div>
-        </div>
-
-
 
         <!--  aboutus -->
         <div class="row justify-content-lg-center">
@@ -87,8 +68,11 @@
         </div>
 
 
-
-
+        <div class="collapse" id="collapseMap">
+            <div class="card card-body">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+            </div>
+        </div>
 
 
 
@@ -109,8 +93,7 @@
                     </div>
                 </div>
                 <div class="row justify-content-md-center" id='box2'>
-                    <div class="col">
-                        analysis
+                    <div class="col chart" id="vizid2">
                     </div>
                 </div>
 
@@ -173,6 +156,9 @@
                 Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
             </div>
         </div>
+
+
+
         <!-- California Content -->
         <div class="row justify-content-lg-center">
             <div class="col col-lg-2">
@@ -181,7 +167,8 @@
 
             <div class="col-md-8" id='california-data'>
                 <a data-toggle="collapse" href="#collapseCalifornia" role="button" aria-expanded="false" aria-controls="collapseCalifornia">
-                california content</a>
+                    <h2 class='historic-title'>Historic Earthquakes: Japan, California, X</h2>
+                </a>
             </div>
 
             <div class="col col-lg-2">
@@ -190,6 +177,7 @@
 
         </div>
 
+
         <!--  Footer -->
         <div class="row justify-content-lg-center">
             <div class="col col-lg-2">
@@ -197,7 +185,26 @@
             </div>
 
             <div class="col-md-8" id='footer'>
+                <h2 class='aboutus-title'>Thank you,</h2>
+                <span class="smalltext">from Team Positive Plotly Pegasi.</span>
+                <div class="row align-items-center" id="footertext">
 
+                    <td>
+                        <ul>Name
+                            <li>Rona Bourdeau</li>
+                            <li>Jackie Song</li>
+                            <li>Christian Pompa</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>Sources (API / References)
+                            <li><a href="https://weatherstack.com/" target="_blank" alt="Weather Stack">Weather Stack</a></li>
+                            <li><a href="https://earthquake.usgs.gov/" target="_blank" alt="USGS">USGS</a></li>
+                            <li>A lot of
+                                <a href="https://www.google.com" target="_blank" alt="Google">Google </a></li>
+                        </ul>
+                    </td>
+                </div>
             </div>
 
 
@@ -228,7 +235,7 @@
     </div>
     <script>
         function countUpFunc() {
-            d3.json(`test/facts`, function(d) {
+            d3.json(`site/facts`, function(d) {
                 var countUp = new CountUp('facts', d[0]['count']);
                 countUp.start();
 
