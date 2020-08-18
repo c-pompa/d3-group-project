@@ -69,7 +69,56 @@
 
         <div class="collapse" id="collapseMap">
             <div class="card card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                <div class="col col-lg-2">
+                    <!-- leave empty -->
+                </div>
+                <div class="row justify-content-lg-center">
+                    <!--  left side -->
+                    <div class="col-lg-4 bts-format">
+
+                        <!-- Begin table -->
+                        <table class="table" id="bts-table">
+                            <thead class="thead-dark"><span class=""><h2> Behind the scenes:</h2></span>
+                                <tr class="d-flex">
+                                    <th class="col-3">Section</th>
+                                    <th class="col-9">Notes / Observations</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="d-flex">
+                                    <td class="col-sm-3">
+                                        <h3>Map:</h3>
+                                    </td>
+                                    <td class="col-sm-9">
+                                        <ul id='bts'>
+                                            <li>Obtain Earthquake API query, Dislay data points on the map.</li>
+                                            <li>On click, send magnitude of selected datapoint to the magnitude box & send the latitude to the database. <br> For this use case, the latitude should not match more than one earthquake as there is no earthquake
+                                                that lands directly in the same latitude coordinates.</li>
+                                            <li><img src="../static/images/update_data_vs.png" width="150px" class="textwrap">The result is flask executing a function within a file called "update_data.py." This function queries the database and returns a
+                                                json, which passes through flask and onto the site.
+                                            </li>
+                                        </ul>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- End table -->
+                    </div>
+
+                    <!-- right side -->
+                    <div class="col-lg-4 bts-format">
+
+                        <!-- Begin table -->
+
+                        <!-- End table -->
+                    </div>
+                </div>
+                <div class="col col-lg-2">
+                    <!-- leave empty -->
+                </div>
+
             </div>
         </div>
 

@@ -186,6 +186,23 @@ h2.teamname {
     border-bottom: 5px solid #E35205;
 }
 
+.bts-td {
+    width: 350px;
+}
+
+.bts-format {
+    padding: 0;
+    height: 350px;
+    background-image: url("../images/bts-bg.png");
+    background-repeat: no-repeat;
+    /* background-attachment: fixed; */
+    background-position: center;
+    background-color: white;
+    margin-right: 20px;
+    /* padding: 0px 20px 0px 10px; */
+    font-size: 10px;
+}
+
 .row {
     padding: 0;
     margin: 0;
@@ -435,6 +452,17 @@ ul>li {
     color: black;
 }
 
+ul#bts>li {
+    font-size: 10px;
+    font-weight: normal;
+    margin: 0;
+    margin-left: 0;
+    list-style-type: none;
+    color: black;
+    text-align: left;
+    padding-bottom: 7px;
+}
+
 ul>li a {
     color: #083e66;
     font-weight: bold;
@@ -466,12 +494,33 @@ td {
     width: 50%;
 }
 
+.textwrap {
+    float: right;
+    margin: 10px;
+}
+
+#bts-table {
+    /* width: 90%; */
+    font-size: 12px;
+    /* padding: 0px; */
+    /* margin: 0px; */
+    float: right;
+}
+
 .latest5holder {
     width: 52%;
     font-size: 12px;
     padding: 0px;
     margin: 0px;
     float: right;
+}
+
+th#section {
+    text-align: center;
+}
+
+td#section {
+    width: 75px;
 }
 
 .table td,
