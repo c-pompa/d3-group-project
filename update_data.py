@@ -417,15 +417,22 @@ def analysisChartCall():
             i+=2    
         # Add new list to df as a new column  
         run_df['difference'] = new_col     
+        # Count up, nochange, down
+        up_count = 0
+        nochange_count = 0
+        down_count = 0
         for x in run_df['difference']:
             if x > 0:
                 icon = "up"
+                up_count+=1
                 icon_list.append(icon)
             elif x == 0:
                 icon = "nochange"
+                nochange_count+=1
                 icon_list.append(icon)
             else:
                 icon = "down"
+                down_count+=1
                 icon_list.append(icon)
 
         # Add new list to df as a new column
@@ -448,9 +455,21 @@ def analysisChartCall():
                 "icon": data.icon,
                 }
             analysis_list.append(container2)
+
+        diff_count = len(run_df['difference'])
+        above_percentage = "{:.0%}".format(up_count / diff_count)
+        atzero_percentage = "{:.0%}".format(nochange_count / diff_count)
+        belowzero_percentage = "{:.0%}".format(down_count / diff_count)
+        container3 = {
+                    "abovezero": up_count,
+                    "abovezeropercent": above_percentage,
+                    "atzero": nochange_count, 
+                    "atzeropercent": atzero_percentage, 
+                    "belowzero": down_count, 
+                    "belowzeropercent": belowzero_percentage,
+                    }
+
+        analysis_list.append(container3)
         return analysis_list
-
     analysis_list = analysisChart()
-
     return analysis_list
-    

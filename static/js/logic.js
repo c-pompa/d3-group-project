@@ -1,7 +1,7 @@
 // Add Techtonic Plate Later as an option
 var techtonicLayer = L.layerGroup();
 // Function: Add temperature data after clicking marker on map
-function techtonic() {
+async function techtonic() {
     d3.json("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json", function(techtonicData) {
 
         L.geoJSON(techtonicData, {
@@ -86,7 +86,7 @@ async function analysisChart() {
     function xScale(eqdata, chosenXAxis) {
         // create scales
         var xLinearScale = d3.scaleLinear()
-            .domain([d3.min(eqdata, d => d[chosenXAxis]) * 0.8,
+            .domain([d3.min(eqdata, d => d[chosenXAxis]) * .95,
                 d3.max(eqdata, d => d[chosenXAxis])
                 // d3.max(eqdata, d => d[chosenXAxis]) * 1.2
             ])
@@ -168,10 +168,15 @@ async function analysisChart() {
         console.log(eqdata);
 
 
+        var data_array = eqdata;
+        var percents_ = data_array[data_array.length - 1];
+        console.log(percents_);
+
         // parse data
         eqdata.forEach(function(data) {
             data.difference = +data.difference;
             data.magnitude = +data.magnitude;
+
         });
 
         // xLinearScale function above csv import
@@ -239,17 +244,64 @@ async function analysisChart() {
             .attr("x", -75)
             .attr("y", 25)
             .attr("value", "magnitude") // value to grab for event listener
+            .attr("color", "#083e66")
             .classed("axis-text", true)
             .text("Magnitude / All earthquakes");
 
         // append y axis
         chartGroup.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 0 - margin.left)
+            .attr("y", 8 - margin.left)
             .attr("x", 10 - (height))
             .attr("dy", "1em")
             .classed("axis-text", true)
             .text("Temperature Difference");
+        console.log(eqdata);
+
+        // append up count
+        chartGroup.append("text")
+            .attr("y", 68)
+            .attr("x", 190)
+            .attr("dy", ".9em")
+            .classed("axis-text", true)
+            .text(`Above Zero: ${percents_["abovezeropercent"]}`)
+            // append zero count
+        chartGroup.append("text")
+            .attr("y", 80)
+            .attr("x", 190)
+            .attr("dy", ".9em")
+            .classed("axis-text", true)
+            .text(`At Zero:    ${percents_["atzeropercent"]}`);
+        chartGroup.append("text")
+            .attr("y", 92)
+            .attr("x", 190)
+            .attr("dy", ".9em")
+            .classed("axis-text", true)
+            .text(`At Zero:    ${percents_["belowzeropercent"]}`);
+        // //A color scale
+        // var colorScale = d3.scale.linear()
+        //     .range(["#2c7bb6", "#00a6ca", "#00ccbc", "#90eb9d", "#ffff8c",
+        //         "#f9d057", "#f29e2e", "#e76818", "#d7191c"
+        //     ]);
+        // append initial circles
+        // var colorScale2 = chartGroup.select("colorbar")
+        //     .data(colorScale.range())
+        //     .enter()
+        //     .append("colorbar")
+        //     .attr("cx", 100)
+        //     .attr("cy", 50)
+        //     .attr("offset", function(d, i) { return i / (colorScale.range().length - 1); })
+        //     .attr("stop-color", function(d) { return d; });
+
+
+
+        // //Append multiple color stops by using D3's data/enter step
+        // chartGroup.selectAll("stop")
+        //     .data(colorScale.range())
+        //     .enter().append("stop")
+        //     .attr("offset", function(d, i) { return i / (colorScale.range().length - 1); })
+        //     .attr("stop-color", function(d) { return d; });
+
 
         // updateToolTip function above csv import
         var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
