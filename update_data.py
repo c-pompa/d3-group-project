@@ -366,7 +366,7 @@ def analysisChartCall():
     # ----------------------------------
     session = Session(bind=engine)
 
-    def analysisChart():
+    def analysisChart():    
         Base = automap_base()
         Base.prepare(engine, reflect=True)
         weather_table = Base.classes.weatherSeries
@@ -414,14 +414,28 @@ def analysisChartCall():
             difference = first - second
             new_col.append(difference)
             new_col.append(difference)
-            i+=2    
+            i+=2
+
         # Add new list to df as a new column  
-        run_df['difference'] = new_col     
+        run_df['difference'] = new_col  
+
+
+        # Remove duplicates
+        run_df2 = run_df.copy()
+        v = 1
+        while v < len(run_df.index):
+            run_df2=run_df2.drop(v)
+            v+=2
+
+
+
+
+
         # Count up, nochange, down
         up_count = 0
         nochange_count = 0
         down_count = 0
-        for x in run_df['difference']:
+        for x in run_df2['difference']:
             if x > 0:
                 icon = "up"
                 up_count+=1
@@ -436,12 +450,12 @@ def analysisChartCall():
                 icon_list.append(icon)
 
         # Add new list to df as a new column
-        run_df['icon'] = icon_list    
+        run_df2['icon'] = icon_list    
         # select only the columns we need
-        run_df = run_df[['date','magnitude','lat','difference','icon']]
+        run_df2 = run_df2[['date','magnitude','lat','difference','icon']]
 
         # # Turn df into list of tuples
-        records = run_df.to_records(index=False)
+        records = run_df2.to_records(index=False)
         analysis_chart = list(records)
 
         # Create list of tuple
@@ -456,7 +470,7 @@ def analysisChartCall():
                 }
             analysis_list.append(container2)
 
-        diff_count = len(run_df['difference'])
+        diff_count = len(run_df2['difference'])
         above_percentage = "{:.0%}".format(up_count / diff_count)
         atzero_percentage = "{:.0%}".format(nochange_count / diff_count)
         belowzero_percentage = "{:.0%}".format(down_count / diff_count)
@@ -469,7 +483,8 @@ def analysisChartCall():
                     "belowzeropercent": belowzero_percentage,
                     }
 
-        analysis_list.append(container3)
+        analysis_list.append(container3)     
         return analysis_list
+
     analysis_list = analysisChart()
     return analysis_list

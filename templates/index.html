@@ -111,8 +111,8 @@
                                                 returns a json, which passes through flask and onto the site.
                                             </li>
                                             <li>
-                                                <a href="../static/images/updateDataWeatherAll.png" target="blank_"><img src="../static/images/update_data_vs.png" width="150px" class="textwrap"></a>The result is flask executing a function within a file called "update_data.py." This function queries the database and returns
-                                                a json, which passes through flask and onto the site.
+                                                <a href="../static/images/updateDataWeatherAll.png" target="blank_"><img src="../static/images/update_data_vs.png" width="150px" class="textwrap"></a>Update Data holds various functions calls to send a JSON back to the JS call. Update data will query a DB call and retreive
+                                                the information needed before finalizing and passing the JSON.
                                             </li>
                                         </ul>
                                     </td>
@@ -375,15 +375,18 @@
                             <tbody>
                                 <tr class="d-flex">
                                     <td class="col-sm-3">
+                                        <br>
                                         <h3>Map:</h3>
                                     </td>
-                                    <td class="col-sm-6">
+                                    <td class="col-sm-9">
                                         <ul id='bts'>
 
                                             <li>
-                                                <a href="../static/images/rona_python.png" target="blank_"><img src="../static/images/rona_python.png" width="150px" alt="Python example" class="textwrap"></a>Some context here.</li>
+                                                <a href="../static/images/rona_python.png" target="blank_"><img src="../static/images/rona_python.png" width="150px" alt="Python example" class="textwrap"></a><br>Using WeatherStack API, we collected temperatures for the 1,258 locations in a given area. We collected
+                                                the temperatures for the day of the earthquake and the day before the earthquake.</li>
                                             <li>
-                                                <a href="../static/images/rona_js.png" target="blank_"><img src="../static/images/rona_js.png" width="150px" alt="JS example" class="textwrap"></a>Some context here.
+                                                <a href="../static/images/rona_js.png" target="blank_"><img src="../static/images/rona_js.png" width="150px" alt="JS example" class="textwrap"></a><br><br><br><br><br><br>Using D3, we created a heatmap layer which represents the difference in temperature the
+                                                day before and the day of the earthquake.
                                             </li>
                                         </ul>
                                     </td>
@@ -466,7 +469,7 @@
                 </div>
 
                 <div class="card" style="width: 18rem;">
-                    <a href="../static/images/historic_baja.png" target="blank_" alt="Historic Eureka"><img class="card-img-top" src="../static/images/historic_baja.png" alt="Historic Baja" width="200px"></a>
+                    <a href="../static/images/historic_ridgecrest.png" target="blank_" alt="Historic Eureka"><img class="card-img-top" src="../static/images/historic_ridgecrest.png" alt="Historic Ridgecrest" width="200px"></a>
                     <div class="card-body">
                         <p class="card-text"><strong>Ridgecrest Quake</strong><br> July 5, 2019, 22:19 PDT. <br> Magnitude: 7.1<br> Mean temperature change: 2.81
                         </p>
