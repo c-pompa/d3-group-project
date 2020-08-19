@@ -47,7 +47,7 @@ weather_earthquake = Base.classes.weatherSeries
 #################################################
 
 # Main
-@app.route('/site')
+@app.route('/')
 def test_page():
     # look inside `templates` and serve `index.html`
     return render_template('index.html')
