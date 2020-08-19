@@ -2,7 +2,7 @@
 ## Does random changes in weather mean an Earthquake is coming?
 
 #### Team: 
-* Rona B
+* Rona Bourdeau
 * Jackie Song
 * Christian Pompa
 
