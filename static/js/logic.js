@@ -287,7 +287,7 @@ async function analysisChart() {
             .attr("x", 190)
             .attr("dy", ".9em")
             .classed("axis-text", true)
-            .text(`At Zero:    ${percents_["belowzeropercent"]}`);
+            .text(`Below Zero:    ${percents_["belowzeropercent"]}`);
         // //A color scale
         // var colorScale = d3.scale.linear()
         //     .range(["#2c7bb6", "#00a6ca", "#00ccbc", "#90eb9d", "#ffff8c",
