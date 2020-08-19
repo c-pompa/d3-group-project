@@ -1,5 +1,5 @@
 ### d3-group-project
-## Does random changes in weather mean an Earthquake is coming?
+## Earthquake Weather: Myth or Reality?
 
 #### Team: 
 * Rona Bourdeau
@@ -7,8 +7,7 @@
 * Christian Pompa
 
 ### Objective: 
-We will review earthquakes from all of 2019 that has a magnitude of 4.5+. We will use the Latitude and Longtitude of the earthquake to 
-get historic weather data from 3 days before the earthquake up until the earthquake date. Afterwards, we will analyze weather data and look for variances and patterns relating to specific eathquake measurements.
+We will review earthquakes from the past month as well as signifiant earthquakes in the past decade with a magnitude of 4.5+. We will use the latitude and longtitude of the earthquake to get the corresponding temperature on the day of the earthquake as well as 3 days before the earthquake. Afterwards, we will analyze if a correlation exists between the change in temperature to the occurrence of an earthquake.
 
 
 ### Libraries and other tools used:
