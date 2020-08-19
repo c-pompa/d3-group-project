@@ -258,6 +258,15 @@ async function analysisChart() {
             .text("Temperature Difference");
         console.log(eqdata);
 
+
+        // title
+        chartGroup.append("text")
+            .attr("y", -20)
+            .attr("x", -30)
+            .attr("dy", ".9em")
+            .classed("axis-text", true)
+            .text(`Day of Quake Temp. & 3 days before Temp. / Highest Temp Diff.`)
+
         // append up count
         chartGroup.append("text")
             .attr("y", 68)
@@ -265,7 +274,8 @@ async function analysisChart() {
             .attr("dy", ".9em")
             .classed("axis-text", true)
             .text(`Above Zero: ${percents_["abovezeropercent"]}`)
-            // append zero count
+
+        // append zero count
         chartGroup.append("text")
             .attr("y", 80)
             .attr("x", 190)

@@ -2,7 +2,7 @@ body,
 html {
     padding: 0;
     margin: 0;
-    background-color: #FFF;
+    background-color: #f7f7f7;
     /* background-color: #F3F3F3; */
 }
 
@@ -41,6 +41,13 @@ p {
 }
 
 span.date {
+    padding: 0;
+    color: #43505d;
+    font-size: 10px;
+    margin: 0;
+}
+
+span.small_details {
     padding: 0;
     color: #43505d;
     font-size: 10px;
@@ -89,8 +96,6 @@ li>p.date {
     background-position: center;
 }
 
-IMG.displayed {}
-
 .center-all {
     width: 800px;
 }
@@ -114,7 +119,7 @@ IMG.displayed {}
 #fact-boxes {
     /* height: 250px; */
     margin: 0;
-    padding: 20px 20px 15px 0px;
+    padding: 25px 20px 20px 0px;
     text-align: center;
     overflow: hidden;
     background: rgba(255, 255, 255, 0.7);
@@ -149,12 +154,56 @@ h2.teamname {
 }
 
 #california-data {
-    height: 500px;
+    /* height: 500px; */
     background-color: #083e66;
     /* min-width: 800px; */
     border-bottom: 5px solid #E35205;
     padding: 20px 30px 15px 30px;
     font-family: 'Asap', sans-serif;
+    color: rgb(231, 231, 231);
+    font-size: 14px;
+}
+
+#historytitle {
+    padding: 20px;
+    padding-bottom: 50px;
+    width: 100%;
+}
+
+#ronamap {
+    height: 300px;
+    /* width: 60%; */
+}
+
+#ronahistoricinfo {
+    color: white;
+    text-align: left;
+    /* width: 40% */
+}
+
+div.collapse>div.card-body {
+    margin: 0px 15px;
+    background-color: white;
+    border: 1px solid rgba(76, 88, 101, .125);
+}
+
+.card {
+    margin: 15px 10px;
+    border: 1px solid rgba(76, 88, 101, .125);
+}
+
+.card-body {
+    padding: 15px;
+    background-color: #e2ebf2;
+}
+
+.card-img-top {
+    height: 220px;
+}
+
+.card-text {
+    padding: 10px 0px;
+    color: #45525f;
 }
 
 #aboutus {
@@ -192,7 +241,7 @@ h2.teamname {
 
 .bts-format {
     padding: 0;
-    height: 350px;
+    /* height: 350px; */
     background-image: url("../images/bts-bg.png");
     background-repeat: no-repeat;
     /* background-attachment: fixed; */
@@ -201,6 +250,13 @@ h2.teamname {
     margin-right: 20px;
     /* padding: 0px 20px 0px 10px; */
     font-size: 10px;
+    max-width: 460px;
+}
+
+div#test {
+    width: 100%;
+    text-align: center;
+    padding: 15px 0px 15px 0px;
 }
 
 .row {
@@ -277,6 +333,22 @@ h2 {
     height: 22px;
 }
 
+.legend2 {
+    padding: 10px;
+    line-height: 18px;
+    color: #555;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.legend2 i {
+    float: left;
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
 .range1 {
     background-color: #e0f56a;
 }
@@ -347,10 +419,15 @@ div.small_details {
 }
 
 span.small_details {
-    font-size: 14px;
+    font-size: 10px;
     color: #083e66;
     padding: 0;
     margin: 0;
+    position: right;
+}
+
+span.small_details a {
+    color: rgb(63, 63, 63);
 }
 
 span.title {
@@ -452,6 +529,17 @@ ul>li {
     color: black;
 }
 
+ul#bts {
+    font-size: 10px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    color: black;
+    text-align: left;
+    padding-bottom: 7px;
+}
+
 ul#bts>li {
     font-size: 10px;
     font-weight: normal;
@@ -459,6 +547,28 @@ ul#bts>li {
     margin-left: 0;
     list-style-type: none;
     color: black;
+    text-align: left;
+    padding-bottom: 7px;
+}
+
+ul#rona {
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    color: rgb(235, 235, 235);
+    text-align: left;
+    padding-bottom: 7px;
+}
+
+ul#rona>li {
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+    margin-left: 0;
+    list-style-type: none;
+    color: rgb(235, 235, 235);
     text-align: left;
     padding-bottom: 7px;
 }
@@ -556,6 +666,18 @@ td#section {
     #fact-boxes {
         min-width: 800px;
     }
+    #aboutus {
+        min-width: 100%;
+    }
+    #header {
+        min-width: 100%;
+    }
+    #california-data {
+        min-width: 100%;
+    }
+    #footer {
+        min-width: 100%;
+    }
 }
 
 
@@ -572,6 +694,18 @@ td#section {
     #fact-boxes {
         min-width: 800px;
     }
+    #aboutus {
+        min-width: 800px;
+    }
+    #header {
+        min-width: 800px;
+    }
+    #california-data {
+        min-width: 800px;
+    }
+    #footer {
+        min-width: 800px;
+    }
 }
 
 
@@ -585,6 +719,18 @@ td#section {
         min-width: 400px;
     }
     #fact-boxes {
+        min-width: 800px;
+    }
+    #aboutus {
+        min-width: 800px;
+    }
+    #header {
+        min-width: 800px;
+    }
+    #california-data {
+        min-width: 800px;
+    }
+    #footer {
         min-width: 800px;
     }
 }
